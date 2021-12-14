@@ -5,17 +5,19 @@
   "main": "./dist/index.min.js",
   "module": "./dist/esm/index.min.esm.js",
   "scripts": {
+    "build": "stencil build --dev --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "node --trace-warnings node_modules/@stencil/core/bin/stencil test --spec --e2e",
+    "test.watch": "node --trace-warnings node_modules/@stencil/core/bin/stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
     "start:dev": "nodemon",
-    "start": "npm run build && node lib/index.js",
-    "build": "rimraf ./lib && tsc",
-    "build:prod": "rimraf ./lib && tsc && npm run minify",
+    "build:prod": "stencil build",
     "minify": "npm install gulp gulp-babel gulp-rename gulp-concat gulp-sourcemaps gulp-typescript gulp-uglify @babel/preset-env && npx gulp && npm uninstall gulp gulp-babel gulp-rename gulp-sourcemaps gulp-typescript gulp-uglify gulp-concat",
-    "test": "jest --coverage",
-    "prepare-release": "npm run build:prod && npm run docs",
+    "prepare-release": "npm run build:prod && npm run coverage && npm run docs",
     "release": "./bin/tag-release.sh",
     "clean-publish": "npx clean-publish",
-    "coverage": "npm test && npm install jest-coverage-badges && jest-coverage-badges --input \"./workdocs/coverage/coverage-summary.json\" --output \"./workdocs/badges\" && npm uninstall jest-coverage-badges",
-    "docs": "npm run coverage && npx rimraf ./docs/* && cp -r ./workdocs/assets ./docs/assets && npm install better-docs taffydb && npx markdown-include ./mdCompile.json && npx jsdoc -c jsdocs.json -t ./node_modules/better-docs && cd docs && ./../workdocs/bin/correct_windows_names.sh . && cd .. && npm remove better-docs taffydb"
+    "coverage": "stencil test --coverage --coverageDirectory=./workdocs/coverage --coverageReporters=json-summary --spec --e2e && npm install jest-coverage-badges && jest-coverage-badges --input \"./workdocs/coverage/coverage-summary.json\" --output \"./workdocs/badges\" && npm uninstall jest-coverage-badges",
+    "docs": "rm -rf ./docs/* && cp -r ./workdocs/assets ./docs/assets && npm install better-docs taffydb && npx markdown-include ./mdCompile.json && npx jsdoc -c jsdocs.json -t ./node_modules/better-docs && cd docs && ./../workdocs/bin/correct_windows_names.sh . && cd .. && npm remove better-docs taffydb"
   },
   "repository": {
     "type": "git",
@@ -26,29 +28,41 @@
     "npm": ">=6.0.0"
   },
   "keywords": [
-    "template",
-    "ts"
+    "validation",
+    "cross-platorm",
+    "customization",
+    "open-source",
+    "decorators",
+    "typescript",
+    "custom validation",
+    "ui",
+    "ui elements",
+    "form validation",
+    "html5 validation"
   ],
-  "author": "TiagoVenceslau",
+  "author": "Tiago Venceslau",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TiagoVenceslau/ui-decorators-web/issues"
   },
   "homepage": "https://github.com/TiagoVenceslau/ui-decorators-web#readme",
   "devDependencies": {
-    "@tvenceslau/decorator-validation": "1.7.3",
-    "@babel/preset-env": "^7.16.4",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^26.0.21",
+    "@types/puppeteer": "^5.4.3",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "puppeteer": "^5.5.0",
     "@types/node": "^16.0.1",
-    "jest": "^27.0.6",
     "jsdoc": "^3.6.7",
     "markdown-include": "^0.4.3",
-    "nodemon": "^2.0.10",
-    "np": "^7.5.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@stencil/core": "^2.6.0",
+    "@tvenceslau/decorator-validation": "^1.5.4",
+    "reflect-metadata": "^0.1.13"
+  }
 }

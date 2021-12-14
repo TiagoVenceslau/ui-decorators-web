@@ -46,7 +46,6 @@
         "destination": "./docs/",
         "readme": "./README.md",
         "recurse": true,
-        "verbose": true,
-        "tutorials": "./tests"
+        "verbose": true
     }
 }
