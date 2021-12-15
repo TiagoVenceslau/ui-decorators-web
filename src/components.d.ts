@@ -6,20 +6,32 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-
+    interface FormValidateSubmit {
+    }
 }
 declare global {
+    interface HTMLFormValidateSubmitElement extends Components.FormValidateSubmit, HTMLStencilElement {
+    }
+    var HTMLFormValidateSubmitElement: {
+        prototype: HTMLFormValidateSubmitElement;
+        new (): HTMLFormValidateSubmitElement;
+    };
     interface HTMLElementTagNameMap {
+        "form-validate-submit": HTMLFormValidateSubmitElement;
     }
 }
 declare namespace LocalJSX {
+    interface FormValidateSubmit {
+    }
     interface IntrinsicElements {
+        "form-validate-submit": FormValidateSubmit;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "form-validate-submit": LocalJSX.FormValidateSubmit & JSXBase.HTMLAttributes<HTMLFormValidateSubmitElement>;
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * @module ts-workspace
+ * @module ui-decorators-web
  */
 
-export * from './hello';
+export * from './ui';

@@ -1,4 +1,5 @@
-import { B as BUILD, c as consoleDevInfo, p as plt, w as win, H, d as doc, N as NAMESPACE, a as promiseResolve, g as globalScripts, b as bootstrapLazy } from './app-globals-d3753182.js';
+import { B as BUILD, c as consoleDevInfo, p as plt, w as win, H, d as doc, N as NAMESPACE, a as promiseResolve, b as bootstrapLazy } from './index-96683c76.js';
+import { g as globalScripts } from './app-globals-0f993ce5.js';
 
 /*
  Stencil Client Patch Browser v2.12.0 | MIT Licensed | https://stenciljs.com
@@ -120,5 +121,5 @@ const patchCloneNodeFix = (HTMLElementPrototype) => {
 
 patchBrowser().then(options => {
   globalScripts();
-  return bootstrapLazy([], options);
+  return bootstrapLazy([["form-validate-submit",[[1,"form-validate-submit"]]]], options);
 });

@@ -1,67 +1,47 @@
 {
-  "name": "@tvenceslau/ui-decorators-web",
+  "name": "ui-decorators-web",
   "version": "0.0.1",
-  "description": "Extension of decorator validation to ui elements",
-  "main": "./dist/index.min.js",
-  "module": "./dist/esm/index.min.esm.js",
-  "scripts": {
-    "build": "stencil build --dev --docs",
-    "start": "stencil build --dev --watch --serve",
-    "test": "node --trace-warnings node_modules/@stencil/core/bin/stencil test --spec --e2e",
-    "test.watch": "node --trace-warnings node_modules/@stencil/core/bin/stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate",
-    "start:dev": "nodemon",
-    "build:prod": "stencil build",
-    "minify": "npm install gulp gulp-babel gulp-rename gulp-concat gulp-sourcemaps gulp-typescript gulp-uglify @babel/preset-env && npx gulp && npm uninstall gulp gulp-babel gulp-rename gulp-sourcemaps gulp-typescript gulp-uglify gulp-concat",
-    "prepare-release": "npm run build:prod && npm run coverage && npm run docs",
-    "release": "./bin/tag-release.sh",
-    "clean-publish": "npx clean-publish",
-    "coverage": "stencil test --coverage --coverageDirectory=./workdocs/coverage --coverageReporters=json-summary --spec --e2e && npm install jest-coverage-badges && jest-coverage-badges --input \"./workdocs/coverage/coverage-summary.json\" --output \"./workdocs/badges\" && npm uninstall jest-coverage-badges",
-    "docs": "rm -rf ./docs/* && cp -r ./workdocs/assets ./docs/assets && npm install better-docs taffydb && npx markdown-include ./mdCompile.json && npx jsdoc -c jsdocs.json -t ./node_modules/better-docs && cd docs && ./../workdocs/bin/correct_windows_names.sh . && cd .. && npm remove better-docs taffydb"
-  },
+  "description": "Stencil Component Starter",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/ui-decorators-web/ui-decorators-web.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TiagoVenceslau/ui-decorators-web.git"
+    "url": "https://github.com/ionic-team/stencil-component-starter.git"
   },
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=6.0.0"
-  },
-  "keywords": [
-    "validation",
-    "cross-platorm",
-    "customization",
-    "open-source",
-    "decorators",
-    "typescript",
-    "custom validation",
-    "ui",
-    "ui elements",
-    "form validation",
-    "html5 validation"
+  "files": [
+    "dist/",
+    "loader/"
   ],
-  "author": "Tiago Venceslau",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/TiagoVenceslau/ui-decorators-web/issues"
+  "scripts": {
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
   },
-  "homepage": "https://github.com/TiagoVenceslau/ui-decorators-web#readme",
+  "dependencies": {
+    "@stencil/core": "^2.11.0"
+  },
   "devDependencies": {
     "@tvenceslau/decorator-validation": "1.7.5",
-    "@types/jest": "^26.0.21",
-    "@types/puppeteer": "^5.4.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.0.1",
+    "@types/puppeteer": "^5.4.4",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "puppeteer": "^5.5.0",
-    "@types/node": "^16.0.1",
     "jsdoc": "^3.6.7",
     "markdown-include": "^0.4.3",
+    "puppeteer": "^13.0.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
   },
-  "dependencies": {
-    "@stencil/core": "^2.6.0"
-  }
+  "license": "MIT"
 }

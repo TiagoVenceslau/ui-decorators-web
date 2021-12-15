@@ -1,14 +1,14 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-  namespace: 'html5-validation',
+  namespace: 'ui-decorators-web',
   outputTargets: [
     {
       type: 'dist',
       esmLoaderPath: '../loader',
     },
     {
-      type: 'dist-custom-elements-bundle',
+      type: 'dist-custom-elements',
     },
     {
       type: 'docs-readme',
