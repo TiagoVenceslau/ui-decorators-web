@@ -9,8 +9,8 @@ describe('ionic-ui-input-element', () => {
   beforeEach(async () => {
     page = await newE2EPage();
     try {
-      await page.addScriptTag({url: 'https://cdn.jsdelivr.net/npm/@tvenceslau/decorator-validation@v1.7.5/dist/esm/index.bundle.min.esm.js', type: 'module'});
-      await page.addScriptTag({url: 'https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators@v0.0.4/dist/esm/index.bundle.min.esm.js', type: 'module'});
+      await page.addScriptTag({url: 'https://cdn.jsdelivr.net/npm/@tvenceslau/decorator-validation@v1.8.0/dist/esm/index.bundle.min.esm.js', type: 'module'});
+      await page.addScriptTag({url: 'https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators@v0.1.0/dist/esm/index.bundle.min.esm.js', type: 'module'});
       await page.addScriptTag({url: 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js', type: 'module'});
       await page.addStyleTag({url: 'https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css'})
     } catch (e) {
