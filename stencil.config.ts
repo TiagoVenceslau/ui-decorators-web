@@ -18,19 +18,19 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
       copy: [
         {
-          src: '../node_modules/@tvenceslau/decorator-validation/dist/esm/index.bundle.esm.js',
+          src: '../node_modules/@tvenceslau/decorator-validation/dist/esm/index.bundle.min.esm.js',
           dest: 'lib/ui-decorators.esm.js'
         },
         {
-          src: '../node_modules/@tvenceslau/decorator-validation/dist/index.bundle.js',
+          src: '../node_modules/@tvenceslau/decorator-validation/dist/index.bundle.min.js',
           dest: 'lib/ui-decorators.js'
         },
         {
-          src: '../node_modules/@tvenceslau/ui-decorators/dist/esm/index.bundle.esm.js',
+          src: '../node_modules/@tvenceslau/ui-decorators/dist/esm/index.bundle.min.esm.js',
           dest: 'lib/ui-decorators.esm.js'
         },
         {
-          src: '../node_modules/@tvenceslau/ui-decorators/dist/index.bundle.js',
+          src: '../node_modules/@tvenceslau/ui-decorators/dist/index.bundle.min.js',
           dest: 'lib/ui-decorators.js'
         },
         {
