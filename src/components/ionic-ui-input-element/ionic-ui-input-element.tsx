@@ -1,8 +1,8 @@
 import {Component, Element, Event, EventEmitter, h, Host, Prop} from '@stencil/core';
 import {UIInputElement} from "../../ui/types";
-import {IonInput} from "@ionic/core/components/ion-input";
 import {bindNativeInput, HTML5Events, prefixName} from "../../utils";
 import {UIKeys} from "../../ui";
+import {IonInput} from "@ionic/core/components/ion-input";
 
 @Component({
   tag: 'ionic-ui-input-element',
@@ -60,7 +60,7 @@ export class IonicUiInputElement implements UIInputElement{
   readonly validity: ValidityState;
 
   private nativeElement: HTMLInputElement;
-  private ionElement: HTMLIonInputElement ;
+  private ionElement: IonInput;
 
   async componentDidRender(){
     this.ionElement = this.element.querySelector('ion-input');

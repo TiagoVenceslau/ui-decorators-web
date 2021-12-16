@@ -19,11 +19,11 @@ export const config: Config = {
       copy: [
         {
           src: '../node_modules/@tvenceslau/decorator-validation/dist/esm/index.bundle.min.esm.js',
-          dest: 'lib/ui-decorators.esm.js'
+          dest: 'lib/decorator-validation.esm.js'
         },
         {
           src: '../node_modules/@tvenceslau/decorator-validation/dist/index.bundle.min.js',
-          dest: 'lib/ui-decorators.js'
+          dest: 'lib/decorator-validation.js'
         },
         {
           src: '../node_modules/@tvenceslau/ui-decorators/dist/esm/index.bundle.min.esm.js',

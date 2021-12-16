@@ -29,8 +29,8 @@
     "@stencil/core": "^2.11.0"
   },
   "devDependencies": {
-    "@tvenceslau/decorator-validation": "1.7.5",
-    "@tvenceslau/ui-decorators": "0.0.4",
+    "@tvenceslau/decorator-validation": "1.8.0",
+    "@tvenceslau/ui-decorators": "0.1.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.0.1",
     "@types/puppeteer": "^5.4.4",
