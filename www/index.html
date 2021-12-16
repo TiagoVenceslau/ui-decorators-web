@@ -1,39 +1,21 @@
-<!doctype html>
-<html dir="ltr" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
-  <script type="module" src="/build/ui-decorators-web.esm.js" data-stencil></script>
-  <script nomodule="" src="/build/ui-decorators-web.js" data-stencil></script>
-</head>
-<body>
-<h3> Classic Form, no custom validation</h3>
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <script type="module" src="/build/ui-decorators-web.esm.js" data-stencil></script> <script nomodule="" src="/build/ui-decorators-web.js" data-stencil></script> <script type="module" src="/lib/ionic/esm/ionic.js"></script> <script nomodule="" src="/lib/ionic/ionic.js"></script> <link rel="stylesheet" href="/lib/ionic/css/ionic.bundle.css"> </head> <body> <h3>Form Validate Submit test Area</h3> <form-validate-submit form-id="test-id"> <div slot="fields"> <ionic-ui-input-element input-id="id" input-name="id" input-prefix="input-" type="text" placeholder="place text here" label="This is a label" required="true" maxlength="15" minlength="5" pattern="^w+$"></ionic-ui-input-element> <basic-ui-input-element input-id="id" input-name="id" input-prefix="input-" type="text" placeholder="place text here" label="This is a label" required="true" maxlength="15" minlength="5" pattern="^w+$"></basic-ui-input-element> </div> <div slot="buttons"> <ion-buttons> <ion-button type="reset">Reset</ion-button> <ion-button color="primary" type="submit">Submit</ion-button> </ion-buttons> </div> </form-validate-submit> <script type="module">
+    // import {TestModel} from './build/index.esm.js';
+    // const form = document.getElementById('model-form-default');
+    // console.log(TestModel)
+    // const tm = new (TestModel.default || TestModel)({
+    //   name: "testsetsetsetsetsetsetset",
+    //   createdOn: new Date('01/01/2000')
+    // });
+    //
+    // form.formDefinition = tm;
 
-<script type="module">
-  import {TestModel} from './build/index.esm.js';
-
-  const form = document.getElementById('model-form-default');
-  console.log(TestModel)
-  const tm = new (TestModel.default || TestModel)({
-    name: "testsetsetsetsetsetsetset",
-    createdOn: new Date('01/01/2000')
-  });
-
-  form.formDefinition = tm;
-
-</script>
-<script>
-  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    // auto-unregister service worker during dev mode
-    navigator.serviceWorker.getRegistration().then(function (registration) {
-      if (registration) {
-        registration.unregister().then(function () {
-          location.reload(true)
-        });
-      }
-    });
+  </script> <script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  // auto-unregister service worker during dev mode
+  navigator.serviceWorker.getRegistration().then(function(registration) {
+  if (registration) {
+    registration.unregister().then(function() { location.reload(true) });
   }
-</script>
-</body>
-</html>
+  });
+}
+</script></body></html>

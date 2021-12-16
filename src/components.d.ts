@@ -9,10 +9,6 @@ import { FormDefinition, FormResult } from "./ui/types";
 export namespace Components {
     interface BasicUiInputElement {
         /**
-          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-         */
-        "checkValidity": () => Promise<any>;
-        /**
           * The id of the wrapper component Should be replicated to the inner component with an id prefix
          */
         "inputId": string;
@@ -28,12 +24,10 @@ export namespace Components {
         "minlength"?: number | string;
         "pattern"?: string;
         "placeholder"?: string;
-        "reportValidity": () => Promise<any>;
         /**
           * HTML5 validation Attributes
          */
         "required": boolean | "true" | "false";
-        "setCustomValidity": (errors: string) => Promise<any>;
         "step"?: number | string;
         /**
           * type of the input field

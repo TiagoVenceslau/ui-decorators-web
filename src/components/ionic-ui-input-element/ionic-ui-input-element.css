@@ -1,3 +1,10 @@
 :host {
   display: block;
+  --form-button-padding: 16px;
+  --form-button-margin: 16px;
+}
+
+.form-buttons{
+  padding: var(--form-button-padding) 0;
+  margin: var(--form-button-margin) 0 0 0;
 }

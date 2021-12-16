@@ -36,9 +36,9 @@ export class FormValidateSubmit {
   @Prop({attribute: 'form-definition'}) formDefinition?: string | FormDefinition;
 
   @Prop({attribute: 'form-id'}) formId: string;
-  @Prop({attribute: 'action'}) action?: string = undefined;
+  @Prop({attribute: 'action'}) action?: string;
   @Prop({attribute: 'method'}) method?: string = "GET";
-  @Prop({attribute: 'input-prefix'}) inputPrefix?: string = undefined;
+  @Prop({attribute: 'input-prefix'}) inputPrefix?: string;
 
   @State() form: FormDefinition = undefined;
 

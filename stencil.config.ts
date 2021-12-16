@@ -16,6 +16,24 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
+      copy: [
+        {
+          src: '../node_modules/@ionic/core/dist/ionic',
+          dest: 'lib/ionic'
+        },
+        {
+          src: '../node_modules/@ionic/core/dist/ionic',
+          dest: 'lib/ionic'
+        },
+        {
+          src: '../node_modules/@ionic/core/dist/esm',
+          dest: 'lib/ionic/esm'
+        },
+        {
+          src: '../node_modules/@ionic/core/css',
+          dest: 'lib/ionic/css'
+        }
+      ]
     },
   ],
 };

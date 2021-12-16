@@ -40,9 +40,10 @@ export function getEventHandler(element: UIInputElement, event: HTML5Events){
   const defaultEventHandler = function(this: UIInputElement, e): void{
     e.preventDefault();
     e.stopImmediatePropagation();
-    if (!this[event.toLowerCase()])
+    const evtName = event.toLowerCase() + "Event";
+    if (!this[evtName])
       throw new Error(`Could not find ${event.toLowerCase()} event in ${this.constructor.name} webcomponent`);
-    const eventEmitter: EventEmitter = this[event.toLowerCase()];
+    const eventEmitter: EventEmitter = this[evtName];
     eventEmitter.emit(e);
   }
 
@@ -60,7 +61,7 @@ export function getEventHandler(element: UIInputElement, event: HTML5Events){
  *
  * @param {HTMLInputElement} nativeInput the native input element
  * @param {HTMLElement} inputElement the custom web component
- * @param {HTML5Events[]} event if none is passed, all {@link HTML5Events} are selected
+ * @param {HTML5Events} event
  *
  * @function bindNativeElement
  */
@@ -69,10 +70,16 @@ export function bindNativeInput(nativeInput: HTMLInputElement, inputElement: UII
   event.forEach(evt => {
     const nativeMethodKey = 'on' + evt.toLowerCase();
     const methodKey = 'handle' + evt + "Event";
-
-    if (nativeInput[nativeMethodKey] && inputElement[methodKey])
-      nativeInput[nativeMethodKey] = getEventHandler(inputElement, evt);
+    Object.defineProperty(inputElement, methodKey, {
+      enumerable: false,
+      writable: false,
+      configurable: false,
+      value: getEventHandler(inputElement, evt)
+    })
+    if (inputElement[methodKey])
+      nativeInput[nativeMethodKey] = inputElement[methodKey].bind(inputElement);
   });
+
   inputElement.checkValidity = checkValidity(inputElement, nativeInput);
   inputElement.reportValidity = reportValidity(inputElement, nativeInput);
   inputElement.setCustomValidity = setCustomValidity(inputElement, nativeInput);

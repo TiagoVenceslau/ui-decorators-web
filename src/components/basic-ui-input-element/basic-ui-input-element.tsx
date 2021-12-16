@@ -2,7 +2,7 @@ import {Component, Host, h, Method, Prop, Element, Event, EventEmitter} from '@s
 import {ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {UIInputElement} from "../../ui/types";
 import {UIKeys} from "../../ui";
-import {prefixName} from "../../utils";
+import {bindNativeInput, HTML5Events, prefixName} from "../../utils";
 
 /**
  * Wrapper around basic HTML5 elements just to prove functionality
@@ -59,61 +59,11 @@ export class BasicUiInputElement implements UIInputElement{
   @Event()
   blurEvent: EventEmitter;
 
-  handleChangeEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.changeEvent.emit(e);
-  }
+  private nativeElement: HTMLInputElement;
 
-  handleFocusEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.focusEvent.emit(e);
-  }
-
-  handleInputEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.inputEvent.emit(e);
-  }
-
-  handleCutEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.cutEvent.emit(e);
-  }
-
-  handleCopyEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.copyEvent.emit(e);
-  }
-
-  handlePasteEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.pasteEvent.emit(e);
-  }
-
-  handleInvalidEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.invalidEvent.emit(e);
-  }
-
-  @Method()
-  async checkValidity() {
-    return this.element.querySelector('input').checkValidity();
-  }
-
-  @Method()
-  async reportValidity() {
-    return this.element.querySelector('input').reportValidity();
-  }
-
-  @Method()
-  async setCustomValidity(errors: string) {
-    return this.element.querySelector('input').setCustomValidity(errors);
+  componentDidRender(){
+    this.nativeElement = this.element.querySelector('input');
+    bindNativeInput(this.nativeElement, this, ...Object.values(HTML5Events));
   }
 
   private getInputProps(){

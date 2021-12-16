@@ -12,6 +12,7 @@ import {UIKeys} from "../../ui";
 export class IonicUiInputElement implements UIInputElement{
 
   @Element() element;
+
   // Element properties
   @Prop({attribute: "input-id", mutable: false}) inputId: string;
   @Prop({attribute: "input-name", mutable: false}) inputName: string;
@@ -50,7 +51,7 @@ export class IonicUiInputElement implements UIInputElement{
   pasteEvent: EventEmitter;
 
   // Ionic custom properties
-  @Prop({attribute: "label-position"}) labelPosition: "fixed" | "floating" | "stacked" = "stacked";
+  @Prop({attribute: "label-position"}) labelPosition: "fixed" | "floating" | "stacked" = "floating";
   @Prop({attribute: "clear-input"}) clearInput: boolean;
   @Prop({attribute: "lines"}) lines: "inset" | "full" | "none" = "none";
 
@@ -59,16 +60,14 @@ export class IonicUiInputElement implements UIInputElement{
   readonly validity: ValidityState;
 
   private nativeElement: HTMLInputElement;
-  private ionElement: IonInput;
+  private ionElement: HTMLIonInputElement ;
 
   async componentDidRender(){
-    console.log(this.element);
-    // this.ionElement = this.element.querySelector('ion-input');
-    // console.log(this.ionElement);
-    // if (this.ionElement){
-    //   this.nativeElement = await this.ionElement.getInputElement();
-    //   bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
-    // }
+    this.ionElement = this.element.querySelector('ion-input');
+    if (this.ionElement){
+      this.nativeElement = await this.ionElement.getInputElement();
+      bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
+    }
   }
 
   handleChangeEvent(e){
@@ -116,10 +115,10 @@ export class IonicUiInputElement implements UIInputElement{
 
                      value={this.value}
 
-                     onIonChange={this.handleChangeEvent}
-                     onIonFocus={this.handleFocusEvent}
-                     onIonInput={this.handleInputEvent}
-                     onIonBlur={this.handleBlurEvent}
+                     onIonChange={this.handleChangeEvent.bind(this)}
+                     onIonFocus={this.handleFocusEvent.bind(this)}
+                     onIonInput={this.handleInputEvent.bind(this)}
+                     onIonBlur={this.handleBlurEvent.bind(this)}
           ></ion-input>
         </ion-item>
       </Host>
