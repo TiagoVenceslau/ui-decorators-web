@@ -5,33 +5,237 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { FormDefinition, FormResult } from "./ui/types";
 export namespace Components {
+    interface BasicUiInputElement {
+        /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+         */
+        "checkValidity": () => Promise<any>;
+        /**
+          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+         */
+        "inputId": string;
+        /**
+          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+         */
+        "inputName": string;
+        "inputPrefix"?: string;
+        "label": string;
+        "max"?: number | string;
+        "maxlength"?: number | string;
+        "min"?: number | string;
+        "minlength"?: number | string;
+        "pattern"?: string;
+        "placeholder"?: string;
+        "reportValidity": () => Promise<any>;
+        /**
+          * HTML5 validation Attributes
+         */
+        "required": boolean | "true" | "false";
+        "setCustomValidity": (errors: string) => Promise<any>;
+        "step"?: number | string;
+        /**
+          * type of the input field
+         */
+        "type": "text" | "number" | "date" | "email" | "url";
+        /**
+          * Value of the input field
+         */
+        "value": string;
+    }
     interface FormValidateSubmit {
+        "action"?: string;
+        "formDefinition"?: string | FormDefinition;
+        "formId": string;
+        "inputPrefix"?: string;
+        "method"?: string;
+    }
+    interface IonicUiInputElement {
+        "clearInput": boolean;
+        "disabled"?: boolean;
+        /**
+          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+         */
+        "inputId": string;
+        /**
+          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+         */
+        "inputName": string;
+        "inputPrefix"?: string;
+        "label"?: string;
+        "labelPosition": "fixed" | "floating" | "stacked";
+        "lines": "inset" | "full" | "none";
+        "max"?: string | number;
+        "maxlength"?: string | number;
+        "min"?: string | number;
+        "minlength"?: string | number;
+        "pattern"?: string;
+        "placeholder"?: string;
+        /**
+          * HTML5 validation Attributes
+         */
+        "required"?: boolean | "true" | "false";
+        "step"?: string | number;
+        /**
+          * To enable custom validators
+         */
+        "subtype"?: string;
+        /**
+          * type of the input field
+         */
+        "type": string;
+        /**
+          * Value of the input field
+         */
+        "value": string;
     }
 }
 declare global {
+    interface HTMLBasicUiInputElementElement extends Components.BasicUiInputElement, HTMLStencilElement {
+    }
+    var HTMLBasicUiInputElementElement: {
+        prototype: HTMLBasicUiInputElementElement;
+        new (): HTMLBasicUiInputElementElement;
+    };
     interface HTMLFormValidateSubmitElement extends Components.FormValidateSubmit, HTMLStencilElement {
     }
     var HTMLFormValidateSubmitElement: {
         prototype: HTMLFormValidateSubmitElement;
         new (): HTMLFormValidateSubmitElement;
     };
+    interface HTMLIonicUiInputElementElement extends Components.IonicUiInputElement, HTMLStencilElement {
+    }
+    var HTMLIonicUiInputElementElement: {
+        prototype: HTMLIonicUiInputElementElement;
+        new (): HTMLIonicUiInputElementElement;
+    };
     interface HTMLElementTagNameMap {
+        "basic-ui-input-element": HTMLBasicUiInputElementElement;
         "form-validate-submit": HTMLFormValidateSubmitElement;
+        "ionic-ui-input-element": HTMLIonicUiInputElementElement;
     }
 }
 declare namespace LocalJSX {
+    interface BasicUiInputElement {
+        /**
+          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+         */
+        "inputId"?: string;
+        /**
+          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+         */
+        "inputName"?: string;
+        "inputPrefix"?: string;
+        "label"?: string;
+        "max"?: number | string;
+        "maxlength"?: number | string;
+        "min"?: number | string;
+        "minlength"?: number | string;
+        "onBlurEvent"?: (event: CustomEvent<any>) => void;
+        /**
+          * HTML5 input events
+         */
+        "onChangeEvent"?: (event: CustomEvent<any>) => void;
+        "onCopyEvent"?: (event: CustomEvent<any>) => void;
+        "onCutEvent"?: (event: CustomEvent<any>) => void;
+        "onFocusEvent"?: (event: CustomEvent<any>) => void;
+        "onInputEvent"?: (event: CustomEvent<any>) => void;
+        "onInvalidEvent"?: (event: CustomEvent<any>) => void;
+        "onPasteEvent"?: (event: CustomEvent<any>) => void;
+        "pattern"?: string;
+        "placeholder"?: string;
+        /**
+          * HTML5 validation Attributes
+         */
+        "required"?: boolean | "true" | "false";
+        "step"?: number | string;
+        /**
+          * type of the input field
+         */
+        "type"?: "text" | "number" | "date" | "email" | "url";
+        /**
+          * Value of the input field
+         */
+        "value"?: string;
+    }
     interface FormValidateSubmit {
+        "action"?: string;
+        "formDefinition"?: string | FormDefinition;
+        "formId"?: string;
+        "inputPrefix"?: string;
+        "method"?: string;
+        /**
+          * Through this event action requests are made
+         */
+        "onResetEvent"?: (event: CustomEvent<any>) => void;
+        /**
+          * Through this event action requests are made
+         */
+        "onSubmitEvent"?: (event: CustomEvent<FormResult>) => void;
+    }
+    interface IonicUiInputElement {
+        "clearInput"?: boolean;
+        "disabled"?: boolean;
+        /**
+          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+         */
+        "inputId"?: string;
+        /**
+          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+         */
+        "inputName"?: string;
+        "inputPrefix"?: string;
+        "label"?: string;
+        "labelPosition"?: "fixed" | "floating" | "stacked";
+        "lines"?: "inset" | "full" | "none";
+        "max"?: string | number;
+        "maxlength"?: string | number;
+        "min"?: string | number;
+        "minlength"?: string | number;
+        /**
+          * HTML5 input events
+         */
+        "onChangeEvent"?: (event: CustomEvent<any>) => void;
+        "onCopyEvent"?: (event: CustomEvent<any>) => void;
+        "onCutEvent"?: (event: CustomEvent<any>) => void;
+        "onFocusEvent"?: (event: CustomEvent<any>) => void;
+        "onInputEvent"?: (event: CustomEvent<any>) => void;
+        "onInvalidEvent"?: (event: CustomEvent<any>) => void;
+        "onPasteEvent"?: (event: CustomEvent<any>) => void;
+        "pattern"?: string;
+        "placeholder"?: string;
+        /**
+          * HTML5 validation Attributes
+         */
+        "required"?: boolean | "true" | "false";
+        "step"?: string | number;
+        /**
+          * To enable custom validators
+         */
+        "subtype"?: string;
+        /**
+          * type of the input field
+         */
+        "type"?: string;
+        /**
+          * Value of the input field
+         */
+        "value"?: string;
     }
     interface IntrinsicElements {
+        "basic-ui-input-element": BasicUiInputElement;
         "form-validate-submit": FormValidateSubmit;
+        "ionic-ui-input-element": IonicUiInputElement;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "basic-ui-input-element": LocalJSX.BasicUiInputElement & JSXBase.HTMLAttributes<HTMLBasicUiInputElementElement>;
             "form-validate-submit": LocalJSX.FormValidateSubmit & JSXBase.HTMLAttributes<HTMLFormValidateSubmitElement>;
+            "ionic-ui-input-element": LocalJSX.IonicUiInputElement & JSXBase.HTMLAttributes<HTMLIonicUiInputElementElement>;
         }
     }
 }

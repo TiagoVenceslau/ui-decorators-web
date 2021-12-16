@@ -20,7 +20,7 @@ export type ValidityStateMatcherType = {"tooShort": string, "typeMismatch": stri
 
 /**
  * Does the match between the HTML5's ValidityState and the validators and input element type
- * 
+ *
  * @enum UIKeys
  *
  * @memberOf ui-decorators.ui
@@ -42,7 +42,7 @@ export const ValidityStateMatcher: ValidityStateMatcherType = {
  * @memberOf ui-decorators.ui
  */
 export const CSS_SELECTORS: {[indexer: string]: string} = {
-    NAMED_SLOT: 'div[slot={0}], slot-fb[name="{0}"]',
+    NAMED_SLOT: 'div[slot={0}], slot-fb[name="{0}"] > *',
     NAMED_DIV: 'div[name={0}]',
     NAMED_ANY: '*[name={0}]'
 }
