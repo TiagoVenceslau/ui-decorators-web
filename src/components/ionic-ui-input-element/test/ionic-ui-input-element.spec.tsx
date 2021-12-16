@@ -20,7 +20,7 @@ describe('ionic-ui-input-element', () => {
     expect(page.root).toEqualHtml(`
       <ionic-ui-input-element id="input-id" input-id="id" input-name="id" input-prefix="input-" label="This is a label" maxlength="15" minlength="5" pattern="^w+$" placeholder="place text here" required="true" type="text">
         <ion-item>
-          <ion-label lines="none" position="stacked">
+          <ion-label lines="none" position="floating">
             This is a label
           </ion-label>
           <ion-input maxlength="15" minlength="5" name="input-id" pattern="^w+$" placeholder="place text here" required="true" type="text"></ion-input>

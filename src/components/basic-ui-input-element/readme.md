@@ -39,39 +39,6 @@
 | `pasteEvent`   |                    | `CustomEvent<any>` |
 
 
-## Methods
-
-### `checkValidity() => Promise<any>`
-
-HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-
-#### Returns
-
-Type: `Promise<any>`
-
-
-
-### `reportValidity() => Promise<any>`
-
-
-
-#### Returns
-
-Type: `Promise<any>`
-
-
-
-### `setCustomValidity(errors: string) => Promise<any>`
-
-
-
-#### Returns
-
-Type: `Promise<any>`
-
-
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

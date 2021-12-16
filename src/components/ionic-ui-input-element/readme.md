@@ -15,7 +15,7 @@
 | `inputName`     | `input-name`     | The name of the 'form' submitting element. should be prefixed to avoid conflicts              | `string`                             | `undefined`          |
 | `inputPrefix`   | `input-prefix`   |                                                                                               | `string`                             | `UIKeys.NAME_PREFIX` |
 | `label`         | `label`          |                                                                                               | `string`                             | `undefined`          |
-| `labelPosition` | `label-position` |                                                                                               | `"fixed" \| "floating" \| "stacked"` | `"stacked"`          |
+| `labelPosition` | `label-position` |                                                                                               | `"fixed" \| "floating" \| "stacked"` | `"floating"`         |
 | `lines`         | `lines`          |                                                                                               | `"full" \| "inset" \| "none"`        | `"none"`             |
 | `max`           | `max`            |                                                                                               | `number \| string`                   | `undefined`          |
 | `maxlength`     | `maxlength`      |                                                                                               | `number \| string`                   | `undefined`          |
