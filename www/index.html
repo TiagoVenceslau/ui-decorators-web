@@ -1,0 +1,39 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Stencil Component Starter</title>
+  <script type="module" src="/build/ui-decorators-web.esm.js" data-stencil></script>
+  <script nomodule="" src="/build/ui-decorators-web.js" data-stencil></script>
+</head>
+<body>
+<h3> Classic Form, no custom validation</h3>
+
+<script type="module">
+  import {TestModel} from './build/index.esm.js';
+
+  const form = document.getElementById('model-form-default');
+  console.log(TestModel)
+  const tm = new (TestModel.default || TestModel)({
+    name: "testsetsetsetsetsetsetset",
+    createdOn: new Date('01/01/2000')
+  });
+
+  form.formDefinition = tm;
+
+</script>
+<script>
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    // auto-unregister service worker during dev mode
+    navigator.serviceWorker.getRegistration().then(function (registration) {
+      if (registration) {
+        registration.unregister().then(function () {
+          location.reload(true)
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>

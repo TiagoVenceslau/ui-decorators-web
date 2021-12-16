@@ -9,9 +9,18 @@ describe('form-validate-submit', () => {
     });
     expect(page.root).toEqualHtml(`
       <form-validate-submit>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+        <form class="form-validate-submit">
+          <slot-fb name="fields"></slot-fb>
+          <slot-fb name="buttons">
+            <br>
+            <button name="reset" type="reset">
+              Reset
+            </button>
+            <button name="submit" type="submit">
+              Submit
+            </button>
+          </slot-fb>
+        </form>
       </form-validate-submit>
     `);
   });

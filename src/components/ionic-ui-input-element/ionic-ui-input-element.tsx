@@ -61,10 +61,14 @@ export class IonicUiInputElement implements UIInputElement{
   private nativeElement: HTMLInputElement;
   private ionElement: IonInput;
 
-  async componentWillLoad(){
-    this.ionElement = this.element.querySelector('ion-input');
-    this.nativeElement = await this.ionElement.getInputElement();
-    bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
+  async componentDidRender(){
+    console.log(this.element);
+    // this.ionElement = this.element.querySelector('ion-input');
+    // console.log(this.ionElement);
+    // if (this.ionElement){
+    //   this.nativeElement = await this.ionElement.getInputElement();
+    //   bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
+    // }
   }
 
   handleChangeEvent(e){

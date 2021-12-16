@@ -1,4 +1,4 @@
-import {Component, Host, h, Element, Prop, State, Event, Watch, EventEmitter} from '@stencil/core';
+import {Component, Host, h, Element, Prop, State, Event, Watch, EventEmitter, Listen} from '@stencil/core';
 import {FormDefinition, FormResult, UIInputElement, UIInputProps} from "../../ui/types";
 import {clearHtmlInput} from "../../utils";
 import {stringFormat} from "@tvenceslau/decorator-validation/lib";
@@ -49,14 +49,6 @@ export class FormValidateSubmit {
       await this.updateForm(this.formDefinition);
   }
 
-  componentDidRender(){
-    this.getInputs().forEach((element, i: number) => {
-      const input = element as unknown as UIInputElement;
-
-
-    });
-  }
-
   @Watch('formDefinition')
   async updateForm(newVal: string | FormDefinition) {
     switch(typeof newVal){
@@ -77,6 +69,16 @@ export class FormValidateSubmit {
     }
   }
 
+  @Listen('changeEvent')
+  @Listen('inputEvent')
+  @Listen('focusEvent')
+  @Listen('blurEvent')
+  @Listen('copyEvent')
+  @Listen('cutEvent')
+  @Listen('pasteEvent')
+  handleInputEvents(e){
+    console.log(e)
+  }
 
   private getInputs(){
     return this.element.querySelectorAll(stringFormat(CSS_SELECTORS.NAMED_SLOT, SLOTS.FIELDS));
