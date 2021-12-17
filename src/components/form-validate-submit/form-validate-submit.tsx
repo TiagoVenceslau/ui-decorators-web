@@ -1,8 +1,9 @@
-import {Component, Host, h, Element, Prop, State, Event, Watch, EventEmitter, Listen} from '@stencil/core';
+import {Component, Host, h, Element, Prop, State, Event, Watch, EventEmitter, Listen, Method} from '@stencil/core';
 import {FormDefinition, FormResult, UIInputElement, UIInputProps} from "../../ui/types";
 import {clearHtmlInput} from "../../utils";
 import {stringFormat} from "@tvenceslau/decorator-validation/lib";
 import {CSS_SELECTORS} from "../../ui";
+import {getFormDefinitionFromFields} from "../../utils/form";
 
 enum SLOTS {
   BUTTONS = "buttons",
@@ -43,10 +44,35 @@ export class FormValidateSubmit {
   @State() form: FormDefinition = undefined;
 
   private formEl: HTMLFormElement = undefined;
+  private needsReRender = true;
 
+  /**
+   * Lifecycle method
+   *
+   * Loads/parses the provided form-definition
+   */
   async componentWillLoad(){
     if (this.formDefinition)
       await this.updateForm(this.formDefinition);
+  }
+
+  async componentDidLoad(){
+    if (!this.form){
+      this.needsReRender = false;
+      this.form = await getFormDefinitionFromFields(this.getInputs());
+      this.needsReRender = true;
+    }
+  }
+  //
+  // componentShouldUpdate(newVal: any, oldVal: any, propName: string){
+  //   if (propName === 'form')
+  //     return this.needsReRender;
+  //   return true;
+  // }
+
+  @Watch('form')
+  handleFormChange(newVal: FormDefinition | undefined, oldVal?: FormDefinition | undefined){
+    return this.needsReRender;
   }
 
   @Watch('formDefinition')
@@ -80,8 +106,9 @@ export class FormValidateSubmit {
     console.log(e)
   }
 
-  private getInputs(){
-    return this.element.querySelectorAll(stringFormat(CSS_SELECTORS.NAMED_SLOT, SLOTS.FIELDS));
+  private getInputs(): UIInputElement[] {
+    // @ts-ignore
+    return Array.from(this.element.querySelectorAll(stringFormat(CSS_SELECTORS.NAMED_SLOT, SLOTS.FIELDS))) as UIInputElement[];
   }
 
   private onReset(evt){

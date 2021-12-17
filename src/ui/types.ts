@@ -79,11 +79,15 @@ export interface UIInputElement extends UIInputProps {
   checkValidity?();
   reportValidity?();
   setCustomValidity?(errors: string);
+
+  /**
+   * Must return the native Element
+   */
+  getNativeElement(): Promise<HTMLInputElement>;
 }
 
 export type InputDefinition = {
   element?: string,
-  label?: string,
   props: UIInputProps,
   validation?: {
     [indexer: string]: ValidatorDefinition,
@@ -91,7 +95,7 @@ export type InputDefinition = {
 }
 
 export type ValidatorDefinition = {
-  args?: [],
+  args?: any[],
   message: string
 }
 

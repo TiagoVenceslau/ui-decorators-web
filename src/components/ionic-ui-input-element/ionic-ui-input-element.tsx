@@ -1,4 +1,4 @@
-import {Component, Element, Event, EventEmitter, h, Host, Prop} from '@stencil/core';
+import {Component, Element, Event, EventEmitter, h, Host, Method, Prop} from '@stencil/core';
 import {UIInputElement} from "../../ui/types";
 import {bindNativeInput, HTML5Events, prefixName} from "../../utils";
 import {UIKeys} from "../../ui";
@@ -68,6 +68,11 @@ export class IonicUiInputElement implements UIInputElement{
       this.nativeElement = await this.ionElement.getInputElement();
       bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
     }
+  }
+
+  @Method()
+  async getNativeElement(): Promise<HTMLInputElement> {
+    return await this.ionElement.getInputElement();
   }
 
   handleChangeEvent(e){

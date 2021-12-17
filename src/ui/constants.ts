@@ -42,7 +42,7 @@ export const ValidityStateMatcher: ValidityStateMatcherType = {
  * @memberOf ui-decorators.ui
  */
 export const CSS_SELECTORS: {[indexer: string]: string} = {
-    NAMED_SLOT: 'div[slot={0}], slot-fb[name="{0}"] > *',
+    NAMED_SLOT: 'div[slot={0}] > *, slot-fb[name={0}] > *',
     NAMED_DIV: 'div[name={0}]',
     NAMED_ANY: '*[name={0}]'
 }
@@ -106,6 +106,17 @@ export const ValidatableByAttribute: {[indexer: string] : {new(): Validator}} = 
     accum[vd.validationKey] = vd.validator
     return accum;
 }, {});
+
+export function convertAttributeNameToWeb(attName: string){
+  switch (attName){
+    case UIKeys.MAX_LENGTH:
+      return "minLength";
+    case UIKeys.MIN_LENGTH:
+      return 'minLength';
+    default:
+      return attName;
+  }
+}
 
 /**
  * @constant HTML5DateFormat

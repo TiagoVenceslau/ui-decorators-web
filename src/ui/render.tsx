@@ -1,4 +1,4 @@
-import {UIModel} from "@tvenceslau/ui-decorators/lib";
+import {getRenderStrategy, setRenderStrategy, UIModel} from "@tvenceslau/ui-decorators/lib";
 import {UIElementDefinition, UIPropertyDecoratorDefinition} from "./types";
 import {formatDate, getPropertyDecorators, ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {HTML5DateFormat, UIKeys, ValidatableByAttribute} from "./constants";
@@ -19,8 +19,12 @@ const formatByType = function(type, value){
   }
 }
 
-
-export function render<T extends UIModel>(model: T){
+/**
+ *
+ * @param {T} model the model to render in HTML5
+ * @param {string} [mode]
+ */
+export function render<T extends UIModel>(model: T, mode?: string){
   const validationProperties: UIPropertyDecoratorDefinition[] = [];
   const uiProperties: UIPropertyDecoratorDefinition[] = [];
   for (let prop in model)
@@ -89,3 +93,5 @@ export function render<T extends UIModel>(model: T){
 
   return html;
 }
+
+setRenderStrategy(render);

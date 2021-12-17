@@ -39,6 +39,19 @@
 | `pasteEvent`   |                    | `CustomEvent<any>` |
 
 
+## Methods
+
+### `getNativeElement() => Promise<HTMLInputElement>`
+
+Must return the native Element
+
+#### Returns
+
+Type: `Promise<HTMLInputElement>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

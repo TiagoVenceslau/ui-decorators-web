@@ -66,6 +66,11 @@ export class BasicUiInputElement implements UIInputElement{
     bindNativeInput(this.nativeElement, this, ...Object.values(HTML5Events));
   }
 
+  @Method()
+  async getNativeElement(): Promise<HTMLInputElement> {
+    return this.nativeElement;
+  }
+
   private getInputProps(){
     const props = {};
     if (this.required && (this.required === 'true' || this.required === true))

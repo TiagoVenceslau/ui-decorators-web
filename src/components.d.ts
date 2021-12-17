@@ -9,6 +9,10 @@ import { FormDefinition, FormResult } from "./ui/types";
 export namespace Components {
     interface BasicUiInputElement {
         /**
+          * Must return the native Element
+         */
+        "getNativeElement": () => Promise<HTMLInputElement>;
+        /**
           * The id of the wrapper component Should be replicated to the inner component with an id prefix
          */
         "inputId": string;
@@ -48,6 +52,10 @@ export namespace Components {
     interface IonicUiInputElement {
         "clearInput": boolean;
         "disabled"?: boolean;
+        /**
+          * Must return the native Element
+         */
+        "getNativeElement": () => Promise<HTMLInputElement>;
         /**
           * The id of the wrapper component Should be replicated to the inner component with an id prefix
          */

@@ -2,8 +2,7 @@ import 'reflect-metadata';
 import {getValidatorRegistry, ValidatorDefinition} from '@tvenceslau/decorator-validation/lib/validation';
 import Validator from '@tvenceslau/decorator-validation/lib/validation/Validators/Validator';
 import {UIKeys, ValidatableByAttribute, ValidatableByType} from "../ui";
-import {FormDefinition, UIInputElement} from "../ui/types";
-import {UIModel} from "../../../ui-decorators/lib/model/types";
+import {UIInputElement} from "../ui/types";
 import {EventEmitter} from "@stencil/core";
 import {ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {Components} from "../components";
@@ -178,14 +177,19 @@ function getValidatorDefinition(input: UIInputElement) : ValidatorDefinition[]{
 
 /**
  * Registers the needed validators from an UInputElement in the Validator Registry
- * @param element
+ * and return the definition
+ *
+ * @param {UIInputElement} element
  *
  * @function registerInputValidators
+ * @return {ValidatorDefinition[]}
  *
  * @memberOf ui-decorators-web.utils
  */
-export function registerInputValidators(element: UIInputElement): void{
-  getValidatorRegistry().register(...getValidatorDefinition(element));
+export function registerInputValidators(element: UIInputElement): ValidatorDefinition[] {
+  const validatorDef = getValidatorDefinition(element);
+  getValidatorRegistry().register(...validatorDef);
+  return validatorDef;
 }
 
 /**
@@ -200,16 +204,6 @@ export function getInputValidators(element: UIInputElement){
     accum[vd.validationKey] = getValidatorRegistry().get(vd.validationKey);
     return accum;
   }, {});
-}
-
-
-export function modelToFormDefinition(model: UIModel, prefix: string = UIKeys.NAME_PREFIX): FormDefinition {
-  return {
-    prefix: prefix,
-    fields: [
-
-    ]
-  }
 }
 
 
