@@ -43,6 +43,8 @@ export interface UIInputProps {
 
 export interface UIInputElement extends UIInputProps {
 
+  inputPrefix?: string;
+
   /**
    * HTML5 input events
    */
@@ -84,6 +86,14 @@ export interface UIInputElement extends UIInputProps {
    * Must return the native Element
    */
   getNativeElement(): Promise<HTMLInputElement>;
+  /**
+   * Must return value, in whatever format it has
+   */
+  getValue(): Promise<any>;
+  /**
+   * Must clear the value
+   */
+  reset(): Promise<void>;
 }
 
 export type InputDefinition = {
@@ -101,7 +111,7 @@ export type ValidatorDefinition = {
 
 export type FormDefinition = {
   prefix?: string,
-  fields: InputDefinition[]
+  fields: {[indexer: string]: InputDefinition}
 }
 
 export type UIPropertyDecoratorDefinition = {

@@ -11,6 +11,7 @@ import Validator from "@tvenceslau/decorator-validation/lib/validation/Validator
 import StepValidator from '@tvenceslau/decorator-validation/lib/validation/Validators/StepValidator';
 import DateValidator from '@tvenceslau/decorator-validation/lib/validation/Validators/DateValidator';
 
+export const hasBeenBoundProp: string = '__bound';
 
 /**
  * @typedef ValidityStateMatcherType
@@ -42,9 +43,10 @@ export const ValidityStateMatcher: ValidityStateMatcherType = {
  * @memberOf ui-decorators.ui
  */
 export const CSS_SELECTORS: {[indexer: string]: string} = {
-    NAMED_SLOT: 'div[slot={0}] > *, slot-fb[name={0}] > *',
-    NAMED_DIV: 'div[name={0}]',
-    NAMED_ANY: '*[name={0}]'
+  INNER_SLOT_ITEMS: 'div[slot={0}] > *, slot-fb[name={0}] > *',
+  SLOTS: 'div[slot={0}], slot-fb[name={0}]',
+  NAMED_DIV: 'div[name={0}]',
+  NAMED_ANY: '*[name={0}]'
 }
 
 /**

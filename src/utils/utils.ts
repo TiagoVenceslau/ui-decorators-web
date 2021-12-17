@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import {getValidatorRegistry, ValidatorDefinition} from '@tvenceslau/decorator-validation/lib/validation';
 import Validator from '@tvenceslau/decorator-validation/lib/validation/Validators/Validator';
-import {UIKeys, ValidatableByAttribute, ValidatableByType} from "../ui";
+import {hasBeenBoundProp, UIKeys, ValidatableByAttribute, ValidatableByType} from "../ui";
 import {UIInputElement} from "../ui/types";
 import {EventEmitter} from "@stencil/core";
 import {ValidationKeys} from "@tvenceslau/decorator-validation/lib";
@@ -37,8 +37,6 @@ export function prefixName(name: string, prefix: string = UIKeys.NAME_PREFIX){
 export function getEventHandler(element: UIInputElement, event: HTML5Events){
 
   const defaultEventHandler = function(this: UIInputElement, e): void{
-    e.preventDefault();
-    e.stopImmediatePropagation();
     const evtName = event.toLowerCase() + "Event";
     if (!this[evtName])
       throw new Error(`Could not find ${event.toLowerCase()} event in ${this.constructor.name} webcomponent`);
@@ -65,6 +63,8 @@ export function getEventHandler(element: UIInputElement, event: HTML5Events){
  * @function bindNativeElement
  */
 export function bindNativeInput(nativeInput: HTMLInputElement, inputElement: UIInputElement, ...event: HTML5Events[]){
+  if (inputElement[hasBeenBoundProp])
+    return;
   event = event.length ? event : Object.values(HTML5Events);
   event.forEach(evt => {
     const nativeMethodKey = 'on' + evt.toLowerCase();
@@ -79,9 +79,15 @@ export function bindNativeInput(nativeInput: HTMLInputElement, inputElement: UII
       nativeInput[nativeMethodKey] = inputElement[methodKey].bind(inputElement);
   });
 
-  inputElement.checkValidity = checkValidity(inputElement, nativeInput);
-  inputElement.reportValidity = reportValidity(inputElement, nativeInput);
-  inputElement.setCustomValidity = setCustomValidity(inputElement, nativeInput);
+  nativeInput.checkValidity = checkValidity(inputElement, nativeInput);
+  nativeInput.reportValidity = reportValidity(inputElement, nativeInput);
+  nativeInput.setCustomValidity = setCustomValidity(inputElement, nativeInput);
+
+  Object.defineProperty(inputElement, hasBeenBoundProp, {
+    writable: false,
+    configurable: false,
+    value: true
+  })
 }
 
 export function buildFormDefinition(form: FormValidateSubmit, inputs: UIInputElement[]): void {
@@ -92,13 +98,13 @@ export function buildFormDefinition(form: FormValidateSubmit, inputs: UIInputEle
 }
 
 export function checkValidity(inputElement, nativeElement) {
-  return async function(){
+  return function(){
     return nativeElement.checkValidity();
   }
 }
 
 export function reportValidity(inputElement, nativeElement) {
-  return async function(){
+  return function(){
     return nativeElement.reportValidity();
   }
 }

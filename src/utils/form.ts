@@ -45,6 +45,7 @@ export async function getFormDefinitionFromFields(fields: UIInputElement[]): Pro
   const fieldPromises = fields.map(async (f) => {
     const native = await f.getNativeElement();
     return {
+      name: native.name.replace(f.inputPrefix, ''),
       element: (f as unknown as Element).tagName.toLowerCase(),
       props: getFieldProps(native),
       validation: getValidatorDefinition(native)
@@ -53,6 +54,13 @@ export async function getFormDefinitionFromFields(fields: UIInputElement[]): Pro
 
   const definitions = await Promise.all(fieldPromises);
   return {
-    fields: definitions
+    fields: definitions.reduce((accum, def) => {
+      accum[def.name] = {
+        element: def.element,
+        props: def.props,
+        validation: def.validation
+      }
+      return accum;
+    }, {})
   };
 }

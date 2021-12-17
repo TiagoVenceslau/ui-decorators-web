@@ -55,6 +55,26 @@ Type: `Promise<HTMLInputElement>`
 
 
 
+### `getValue() => Promise<any>`
+
+Must return value, in whatever format it has
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `reset() => Promise<void>`
+
+Must clear the value
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 

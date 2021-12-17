@@ -61,14 +61,26 @@ export class BasicUiInputElement implements UIInputElement{
 
   private nativeElement: HTMLInputElement;
 
-  componentDidRender(){
+  componentDidLoad(){
     this.nativeElement = this.element.querySelector('input');
     bindNativeInput(this.nativeElement, this, ...Object.values(HTML5Events));
+    console.log(`Component did Load on Simple`)
   }
 
   @Method()
   async getNativeElement(): Promise<HTMLInputElement> {
     return this.nativeElement;
+  }
+
+  @Method()
+  async getValue(): Promise<any> {
+    return this.nativeElement.value;
+  }
+
+  @Method()
+  async reset(): Promise<void> {
+    console.log(`"reset`);
+    this.nativeElement.value = '';
   }
 
   private getInputProps(){

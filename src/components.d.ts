@@ -13,6 +13,10 @@ export namespace Components {
          */
         "getNativeElement": () => Promise<HTMLInputElement>;
         /**
+          * Must return value, in whatever format it has
+         */
+        "getValue": () => Promise<any>;
+        /**
           * The id of the wrapper component Should be replicated to the inner component with an id prefix
          */
         "inputId": string;
@@ -32,6 +36,10 @@ export namespace Components {
           * HTML5 validation Attributes
          */
         "required": boolean | "true" | "false";
+        /**
+          * Must clear the value
+         */
+        "reset": () => Promise<void>;
         "step"?: number | string;
         /**
           * type of the input field
@@ -57,6 +65,10 @@ export namespace Components {
          */
         "getNativeElement": () => Promise<HTMLInputElement>;
         /**
+          * Must return value, in whatever format it has
+         */
+        "getValue": () => Promise<any>;
+        /**
           * The id of the wrapper component Should be replicated to the inner component with an id prefix
          */
         "inputId": string;
@@ -78,6 +90,10 @@ export namespace Components {
           * HTML5 validation Attributes
          */
         "required"?: boolean | "true" | "false";
+        /**
+          * Must clear the value
+         */
+        "reset": () => Promise<void>;
         "step"?: string | number;
         /**
           * To enable custom validators

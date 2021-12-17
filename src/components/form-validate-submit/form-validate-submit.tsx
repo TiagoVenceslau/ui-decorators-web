@@ -41,7 +41,9 @@ export class FormValidateSubmit {
   @Prop({attribute: 'method'}) method?: string = "GET";
   @Prop({attribute: 'input-prefix'}) inputPrefix?: string;
 
-  @State() form: FormDefinition = undefined;
+  private formCache: FormDefinition = undefined;
+
+  private form:  FormDefinition = undefined;
 
   private formEl: HTMLFormElement = undefined;
   private needsReRender = true;
@@ -49,76 +51,70 @@ export class FormValidateSubmit {
   /**
    * Lifecycle method
    *
-   * Loads/parses the provided form-definition
+   * Loads/parses the provided form-definition on load
    */
   async componentWillLoad(){
     if (this.formDefinition)
-      await this.updateForm(this.formDefinition);
+      await this.updateFormCache(this.formDefinition);
   }
 
+  /**
+   * Lifecycle method
+   *
+   * After component has loaded, updates the form definition if required and bind the button event
+   */
   async componentDidLoad(){
-    if (!this.form){
-      this.needsReRender = false;
-      this.form = await getFormDefinitionFromFields(this.getInputs());
-      this.needsReRender = true;
-    }
-  }
-  //
-  // componentShouldUpdate(newVal: any, oldVal: any, propName: string){
-  //   if (propName === 'form')
-  //     return this.needsReRender;
-  //   return true;
-  // }
-
-  @Watch('form')
-  handleFormChange(newVal: FormDefinition | undefined, oldVal?: FormDefinition | undefined){
-    return this.needsReRender;
+    if (!this.formCache)
+      this.formCache = await getFormDefinitionFromFields(this.getInputs());
   }
 
   @Watch('formDefinition')
-  async updateForm(newVal: string | FormDefinition) {
+  async updateFormCache(newVal: string | FormDefinition) {
     switch(typeof newVal){
       case 'string':
         try {
-          this.form = JSON.parse(newVal) as FormDefinition;
+          this.formCache = JSON.parse(newVal) as FormDefinition;
         } catch (e){
-          this.form = undefined;
+          this.formCache = undefined;
         }
         break;
       case 'object':
-        if (newVal.fields && newVal.prefix){
-          this.form = newVal as FormDefinition;
+        if (newVal.fields){
+          this.formCache = newVal as FormDefinition;
           break;
         }
       default:
-        this.form = undefined;
+        this.formCache = undefined;
     }
+
+    this.form = JSON.parse(JSON.stringify(this.formCache));
   }
 
   @Listen('changeEvent')
-  @Listen('inputEvent')
-  @Listen('focusEvent')
-  @Listen('blurEvent')
-  @Listen('copyEvent')
-  @Listen('cutEvent')
-  @Listen('pasteEvent')
-  handleInputEvents(e){
-    console.log(e)
+  async handleInputEvents(e){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    const input: UIInputElement = e.target;
+    const value = await input.getValue();
+    this.formCache.fields[input.inputName].props.value = value;
+    console.log(`Value for field ${input.inputName} was updated to ${value}`);
   }
 
   private getInputs(): UIInputElement[] {
     // @ts-ignore
-    return Array.from(this.element.querySelectorAll(stringFormat(CSS_SELECTORS.NAMED_SLOT, SLOTS.FIELDS))) as UIInputElement[];
+    return Array.from(this.element.querySelectorAll(stringFormat(CSS_SELECTORS.INNER_SLOT_ITEMS, SLOTS.FIELDS))) as UIInputElement[];
   }
 
-  private onReset(evt){
+  private async onReset(evt){
     evt.preventDefault()
     evt.stopImmediatePropagation();
+    console.log(evt);
     const inputs = this.getInputs()
-    inputs.forEach(input => clearHtmlInput((input as unknown) as UIInputElement));
+    await Promise.all(inputs.map(async (input) => await input.reset()));
   }
 
   private onSubmit(evt, name?: string){
+    console.log(evt);
     if (!name)
       name = evt.target.name;
 
@@ -174,7 +170,7 @@ export class FormValidateSubmit {
     }
 
     if (this.form)
-      return wrapInSlot(this.form.fields.map(field => this.renderInput(field.element, field.props)));
+      return wrapInSlot(Object.values(this.form.fields).map(field => this.renderInput(field.element, field.props)));
     return wrapInSlot();
   }
 

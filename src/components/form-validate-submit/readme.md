@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type                                                        | Default     |
-| ---------------- | ----------------- | ----------- | ----------------------------------------------------------- | ----------- |
-| `action`         | `action`          |             | `string`                                                    | `undefined` |
-| `formDefinition` | `form-definition` |             | `string \| { prefix?: string; fields: InputDefinition[]; }` | `undefined` |
-| `formId`         | `form-id`         |             | `string`                                                    | `undefined` |
-| `inputPrefix`    | `input-prefix`    |             | `string`                                                    | `undefined` |
-| `method`         | `method`          |             | `string`                                                    | `"GET"`     |
+| Property         | Attribute         | Description | Type                                                                              | Default     |
+| ---------------- | ----------------- | ----------- | --------------------------------------------------------------------------------- | ----------- |
+| `action`         | `action`          |             | `string`                                                                          | `undefined` |
+| `formDefinition` | `form-definition` |             | `string \| { prefix?: string; fields: { [indexer: string]: InputDefinition; }; }` | `undefined` |
+| `formId`         | `form-id`         |             | `string`                                                                          | `undefined` |
+| `inputPrefix`    | `input-prefix`    |             | `string`                                                                          | `undefined` |
+| `method`         | `method`          |             | `string`                                                                          | `"GET"`     |
 
 
 ## Events
