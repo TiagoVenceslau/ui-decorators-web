@@ -1,9 +1,10 @@
 import {Component, Host, h, Element, Prop, State, Event, Watch, EventEmitter, Listen, Method} from '@stencil/core';
-import {FormDefinition, FormResult, UIInputElement, UIInputProps} from "../../ui/types";
-import {clearHtmlInput} from "../../utils";
+import {FormDefinition, FormResult, InputDefinition, UIInputElement, UIInputProps} from "../../ui/types";
+import {bindNativeInput, performValidations, registerInputValidators} from "../../utils";
 import {stringFormat} from "@tvenceslau/decorator-validation/lib";
 import {CSS_SELECTORS} from "../../ui";
 import {getFormDefinitionFromFields} from "../../utils/form";
+import {ValidatorRegistry} from "@tvenceslau/decorator-validation/lib/validation/ValidatorRegistry";
 
 enum SLOTS {
   BUTTONS = "buttons",
@@ -11,7 +12,33 @@ enum SLOTS {
 }
 
 /**
- * Wrapper Form Component that handles all custom validation for components
+ * Wrapper Form Component that handles all custom validation for {@link UIInputElement} components.
+ *  - binds all {@link UIInputElement}'s native inputs via {@link bindNativeInput}
+ *    - this means all {@link HTML5Events} will be mapped to a default implementation, or if you '
+ *      provide your own implementation by defining a 'handleXXXEvent(e)' method. This is useful when using custom
+ *      components that already have some events mapped
+ *  - Intercepts the field errors and translates them (if 'customValidations' is enabled);
+ *  - When custom validation is enabled also validates according to all custom validation currently in the {@link ValidatorRegistry}
+ *
+ *  Does not use shadow dom.
+ *
+ * @component
+ * @example
+ * return (
+ *  <form-validate-submit form-id={"formid"}>
+ *    <basic-ui-input-element input-id={"id"}
+ *                            input-name={"id"}
+ *                            input-prefix={"input-"}
+ *                            type={"text"}
+ *                            placeholder={"place text here"}
+ *                            label={"This is a label"}
+ *                            required={"true"}
+ *                            maxlength={"15"}
+ *                            minlength={"5"}
+ *                            pattern={"^w+$"}
+ *    ></basic-ui-input-element>
+ *  </form-validate-submit>
+ * )
  */
 @Component({
   tag: 'form-validate-submit',
@@ -19,17 +46,16 @@ enum SLOTS {
   shadow: false,
 })
 export class FormValidateSubmit {
-
   @Element()
   public element: HTMLElement;
 
   /**
-   * Through this event action requests are made
+   * Event with the form data is raised if no form {@link action} is defined
    */
   @Event()
   submitEvent: EventEmitter<FormResult>;
   /**
-   * Through this event action requests are made
+   * Event is raised when the form is reset
    */
   @Event()
   resetEvent: EventEmitter;
@@ -37,16 +63,33 @@ export class FormValidateSubmit {
   @Prop({attribute: 'form-definition'}) formDefinition?: string | FormDefinition;
 
   @Prop({attribute: 'form-id'}) formId: string;
-  @Prop({attribute: 'action'}) action?: string;
-  @Prop({attribute: 'method'}) method?: string = "GET";
+  /**
+   * Standard HTML Form action 'url to call'. When defined the form will perform the request with the normal form data.
+   * Otherwise will raise a {@link submitEvent}
+   */
+  @Prop({attribute: 'form-action'}) action?: string;
+  /**
+   * HTML VERB. defaults to POST
+   */
+  @Prop({attribute: 'form-method'}) method?: "GET" | "POST" | "PUT" = "POST";
+  /**
+   * To avoid conflicts it's better to prefix id and names
+   */
   @Prop({attribute: 'input-prefix'}) inputPrefix?: string;
+  /**
+   * Enables/disables custom validators and custom error messages
+   */
+  @Prop({attribute: 'custom-validation'}) customValidation: boolean = true;
+  /**
+   * Triggers field validation whenever it's value changes
+   */
+  @Prop({attribute: 'validate-on-change'}) validateOnChange: boolean = false;
 
   private formCache: FormDefinition = undefined;
-
-  private form:  FormDefinition = undefined;
-
   private formEl: HTMLFormElement = undefined;
-  private needsReRender = true;
+
+  @State() form: FormDefinition = undefined;
+
 
   /**
    * Lifecycle method
@@ -56,6 +99,7 @@ export class FormValidateSubmit {
   async componentWillLoad(){
     if (this.formDefinition)
       await this.updateFormCache(this.formDefinition);
+    this.formEl = this.element.querySelector(`form[id="${this.formId}"]`);
   }
 
   /**
@@ -64,8 +108,15 @@ export class FormValidateSubmit {
    * After component has loaded, updates the form definition if required and bind the button event
    */
   async componentDidLoad(){
+    const inputs = this.getInputs();
     if (!this.formCache)
-      this.formCache = await getFormDefinitionFromFields(this.getInputs());
+      this.formCache = await getFormDefinitionFromFields(inputs);
+    this.formCache.prefix = this.inputPrefix;
+    this.formCache.customValidation = true;
+    const self = this;
+    const bindingPromises = inputs.map(async (i) => await i.bindNativeEvents(self.formCache));
+    await Promise.all(bindingPromises);
+    inputs.forEach(registerInputValidators);
   }
 
   @Watch('formDefinition')
@@ -114,10 +165,6 @@ export class FormValidateSubmit {
   }
 
   private onSubmit(evt, name?: string){
-    console.log(evt);
-    if (!name)
-      name = evt.target.name;
-
     if (!this.formEl.checkValidity())
       return this.formEl.reportValidity();
 
@@ -127,20 +174,16 @@ export class FormValidateSubmit {
     evt.preventDefault();
     evt.stopImmediatePropagation();
 
-    // const fields = this.form && !this.isModel ? this.form.fields : this.getInputs();
-    //
-    // const output = {};
-    // fields.forEach(field => {
-    //   const value = this.form && !this.isModel ? field.props.value : field.value;
-    //   if (value)
-    //     output[field.name] = value;
-    // });
-    //
-    // console.log(`Form submitted. Result: `, output);
-    // this.submit.emit({
-    //   action: name,
-    //   form: output
-    // });
+    const output: {[indexer: string]: any} = Object.entries(this.formCache.fields).reduce((accum, [key, fieldDef]) => {
+      accum[key] = fieldDef.props ? fieldDef.props.value : undefined;
+      return accum;
+    }, {})
+
+    console.log(`Form submitted. Result: `, output);
+    this.submitEvent.emit({
+      action: name,
+      result: output
+    });
   }
 
   private getButtons(){

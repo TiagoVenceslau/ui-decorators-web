@@ -9,6 +9,18 @@ import { FormDefinition, FormResult } from "./ui/types";
 export namespace Components {
     interface BasicUiInputElement {
         /**
+          * @function bindNativeEvents  Must call:
+          * @example async bindNativeEvents(form: FormDefinition) {  return bindNativeInput(this.nativeElement, this, form); }
+         */
+        "bindNativeEvents": (form: FormDefinition) => Promise<void>;
+        /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @function checkValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async checkValidity() { return checkValidity(this, this.nativeElement); }
+         */
+        "checkValidity": () => Promise<any>;
+        /**
           * Must return the native Element
          */
         "getNativeElement": () => Promise<HTMLInputElement>;
@@ -33,6 +45,13 @@ export namespace Components {
         "pattern"?: string;
         "placeholder"?: string;
         /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @function reportValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async reportValidity() { return reportValidity(this, this.nativeElement); }
+         */
+        "reportValidity": () => Promise<any>;
+        /**
           * HTML5 validation Attributes
          */
         "required": boolean | "true" | "false";
@@ -40,6 +59,14 @@ export namespace Components {
           * Must clear the value
          */
         "reset": () => Promise<void>;
+        /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @param errors
+          * @function reportValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async setCustomValidity(errors) { return setCustomValidity(this, this.nativeElement, errors); }
+         */
+        "setCustomValidity": (errors: string) => Promise<any>;
         "step"?: number | string;
         /**
           * type of the input field
@@ -51,13 +78,42 @@ export namespace Components {
         "value": string;
     }
     interface FormValidateSubmit {
+        /**
+          * Standard HTML Form action 'url to call'. When defined the form will perform the request with the normal form data. Otherwise will raise a {@link submitEvent}
+         */
         "action"?: string;
+        /**
+          * Enables/disables custom validators and custom error messages
+         */
+        "customValidation": boolean;
         "formDefinition"?: string | FormDefinition;
         "formId": string;
+        /**
+          * To avoid conflicts it's better to prefix id and names
+         */
         "inputPrefix"?: string;
-        "method"?: string;
+        /**
+          * HTML VERB. defaults to POST
+         */
+        "method"?: "GET" | "POST" | "PUT";
+        /**
+          * Triggers field validation whenever it's value changes
+         */
+        "validateOnChange": boolean;
     }
     interface IonicUiInputElement {
+        /**
+          * @function bindNativeEvents  Must call:
+          * @example async bindNativeEvents(form: FormDefinition) {  return bindNativeInput(this.nativeElement, this, form); }
+         */
+        "bindNativeEvents": (form: FormDefinition) => Promise<void>;
+        /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @function checkValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async checkValidity() { return checkValidity(this, this.nativeElement); }
+         */
+        "checkValidity": () => Promise<any>;
         "clearInput": boolean;
         "disabled"?: boolean;
         /**
@@ -87,6 +143,13 @@ export namespace Components {
         "pattern"?: string;
         "placeholder"?: string;
         /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @function reportValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async reportValidity() { return reportValidity(this, this.nativeElement); }
+         */
+        "reportValidity": () => Promise<any>;
+        /**
           * HTML5 validation Attributes
          */
         "required"?: boolean | "true" | "false";
@@ -94,6 +157,14 @@ export namespace Components {
           * Must clear the value
          */
         "reset": () => Promise<void>;
+        /**
+          * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+          * @param errors
+          * @function reportValidity  <strong>must be defined as:</strong>
+          * @example 
+          * @method () async setCustomValidity(errors) { return setCustomValidity(this, this.nativeElement, errors); }
+         */
+        "setCustomValidity": (errors: string) => Promise<any>;
         "step"?: string | number;
         /**
           * To enable custom validators
@@ -178,19 +249,36 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface FormValidateSubmit {
+        /**
+          * Standard HTML Form action 'url to call'. When defined the form will perform the request with the normal form data. Otherwise will raise a {@link submitEvent}
+         */
         "action"?: string;
+        /**
+          * Enables/disables custom validators and custom error messages
+         */
+        "customValidation"?: boolean;
         "formDefinition"?: string | FormDefinition;
         "formId"?: string;
-        "inputPrefix"?: string;
-        "method"?: string;
         /**
-          * Through this event action requests are made
+          * To avoid conflicts it's better to prefix id and names
+         */
+        "inputPrefix"?: string;
+        /**
+          * HTML VERB. defaults to POST
+         */
+        "method"?: "GET" | "POST" | "PUT";
+        /**
+          * Event is raised when the form is reset
          */
         "onResetEvent"?: (event: CustomEvent<any>) => void;
         /**
-          * Through this event action requests are made
+          * Event with the form data is raised if no form {@link action} is defined
          */
         "onSubmitEvent"?: (event: CustomEvent<FormResult>) => void;
+        /**
+          * Triggers field validation whenever it's value changes
+         */
+        "validateOnChange"?: boolean;
     }
     interface IonicUiInputElement {
         "clearInput"?: boolean;

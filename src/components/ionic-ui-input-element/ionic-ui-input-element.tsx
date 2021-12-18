@@ -1,6 +1,6 @@
 import {Component, Element, Event, EventEmitter, h, Host, Method, Prop} from '@stencil/core';
-import {UIInputElement} from "../../ui/types";
-import {bindNativeInput, HTML5Events, prefixName} from "../../utils";
+import {FormDefinition, UIInputElement} from "../../ui/types";
+import {bindNativeInput, checkValidity, reportValidity, setCustomValidity, HTML5Events, prefixName} from "../../utils";
 import {UIKeys} from "../../ui";
 import {IonInput} from "@ionic/core/components/ion-input";
 
@@ -64,11 +64,8 @@ export class IonicUiInputElement implements UIInputElement{
 
   async componentDidLoad(){
     this.ionElement = this.element.querySelector('ion-input');
-    if (this.ionElement){
+    if (this.ionElement)
       this.nativeElement = await this.ionElement.getInputElement();
-      bindNativeInput(this.nativeElement, this, HTML5Events.INVALID, HTML5Events.COPY, HTML5Events.CUT, HTML5Events.PASTE);
-      console.log(`Component did Load on Ion`)
-    }
   }
 
   @Method()
@@ -109,6 +106,26 @@ export class IonicUiInputElement implements UIInputElement{
     e.preventDefault();
     e.stopImmediatePropagation();
     this.inputEvent.emit(e)
+  }
+
+  @Method()
+  async checkValidity() {
+    return checkValidity(this, this.nativeElement);
+  }
+
+  @Method()
+  async reportValidity() {
+    return reportValidity(this, this.nativeElement);
+  }
+
+  @Method()
+  async setCustomValidity(errors: string) {
+    return setCustomValidity(this, this.nativeElement, errors);
+  }
+
+  @Method()
+  async bindNativeEvents(form: FormDefinition) {
+    bindNativeInput(this.nativeElement, this, form);
   }
 
   render() {

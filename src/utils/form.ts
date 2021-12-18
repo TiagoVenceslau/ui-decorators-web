@@ -1,7 +1,7 @@
-import {FormDefinition, InputDefinition, UIInputElement, UIInputProps, ValidatorDefinition} from "../ui/types";
+import {FormDefinition, UIInputElement, UIInputProps, ValidatorDefinition} from "../ui/types";
 import {convertAttributeNameToWeb, UIKeys, ValidatableByAttribute, ValidatableByType} from "../ui";
 import {DEFAULT_ERROR_MESSAGES, ValidationKeys} from "@tvenceslau/decorator-validation/lib";
-import {getTranslationService} from "../locale/locale";
+import {getTranslationService} from "../services/locale";
 
 export async function getFormDefinitionFromFields(fields: UIInputElement[]): Promise<FormDefinition> {
 

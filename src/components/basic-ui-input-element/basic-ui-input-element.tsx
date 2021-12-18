@@ -1,8 +1,8 @@
 import {Component, Host, h, Method, Prop, Element, Event, EventEmitter} from '@stencil/core';
 import {ValidationKeys} from "@tvenceslau/decorator-validation/lib";
-import {UIInputElement} from "../../ui/types";
+import {FormDefinition, UIInputElement} from "../../ui/types";
 import {UIKeys} from "../../ui";
-import {bindNativeInput, HTML5Events, prefixName} from "../../utils";
+import {bindNativeInput, checkValidity, reportValidity, setCustomValidity, HTML5Events, prefixName} from "../../utils";
 
 /**
  * Wrapper around basic HTML5 elements just to prove functionality
@@ -63,8 +63,6 @@ export class BasicUiInputElement implements UIInputElement{
 
   componentDidLoad(){
     this.nativeElement = this.element.querySelector('input');
-    bindNativeInput(this.nativeElement, this, ...Object.values(HTML5Events));
-    console.log(`Component did Load on Simple`)
   }
 
   @Method()
@@ -79,8 +77,27 @@ export class BasicUiInputElement implements UIInputElement{
 
   @Method()
   async reset(): Promise<void> {
-    console.log(`"reset`);
     this.nativeElement.value = '';
+  }
+
+  @Method()
+  async checkValidity() {
+    return checkValidity(this, this.nativeElement);
+  }
+
+  @Method()
+  async reportValidity() {
+    return reportValidity(this, this.nativeElement);
+  }
+
+  @Method()
+  async setCustomValidity(errors: string) {
+    return setCustomValidity(this, this.nativeElement, errors);
+  }
+
+  @Method()
+  async bindNativeEvents(form: FormDefinition) {
+    bindNativeInput(this.nativeElement, this, form);
   }
 
   private getInputProps(){

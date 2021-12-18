@@ -11,8 +11,6 @@ import Validator from "@tvenceslau/decorator-validation/lib/validation/Validator
 import StepValidator from '@tvenceslau/decorator-validation/lib/validation/Validators/StepValidator';
 import DateValidator from '@tvenceslau/decorator-validation/lib/validation/Validators/DateValidator';
 
-export const hasBeenBoundProp: string = '__bound';
-
 /**
  * @typedef ValidityStateMatcherType
  * @memberOf ui-decorators.ui

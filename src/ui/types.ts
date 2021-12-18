@@ -42,7 +42,6 @@ export interface UIInputProps {
 }
 
 export interface UIInputElement extends UIInputProps {
-
   inputPrefix?: string;
 
   /**
@@ -77,10 +76,48 @@ export interface UIInputElement extends UIInputProps {
 
   /**
    * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+   *
+   * @function checkValidity
+   *
+   * <strong>must be defined as:</strong>
+   *
+   * @example
+   * @method()
+   * async checkValidity() {
+   *  return checkValidity(this, this.nativeElement);
+   * }
    */
-  checkValidity?();
-  reportValidity?();
-  setCustomValidity?(errors: string);
+  checkValidity();
+  /**
+   * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+   *
+   * @function reportValidity
+   *
+   * <strong>must be defined as:</strong>
+   *
+   * @example
+   * @method()
+   * async reportValidity() {
+   *  return reportValidity(this, this.nativeElement);
+   * }
+   */
+  reportValidity();
+  /**
+   * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+   *
+   * @param {string} errors
+   *
+   * @function reportValidity
+   *
+   * <strong>must be defined as:</strong>
+   *
+   * @example
+   * @method()
+   * async setCustomValidity(errors) {
+   *  return setCustomValidity(this, this.nativeElement, errors);
+   * }
+   */
+  setCustomValidity(errors: string);
 
   /**
    * Must return the native Element
@@ -94,6 +131,19 @@ export interface UIInputElement extends UIInputProps {
    * Must clear the value
    */
   reset(): Promise<void>;
+
+  /**
+   *
+   * @function bindNativeEvents
+   *
+   * Must call:
+   *
+   * @example
+   * async bindNativeEvents(form: FormDefinition) {
+   *  return bindNativeInput(this.nativeElement, this, form);
+   * }
+   */
+  bindNativeEvents(form: FormDefinition): Promise<void>;
 }
 
 export type InputDefinition = {
@@ -111,6 +161,7 @@ export type ValidatorDefinition = {
 
 export type FormDefinition = {
   prefix?: string,
+  customValidation?: boolean,
   fields: {[indexer: string]: InputDefinition}
 }
 
