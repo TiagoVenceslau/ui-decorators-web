@@ -9,71 +9,102 @@ import { FormDefinition, FormResult } from "./ui/types";
 export namespace Components {
     interface BasicUiInputElement {
         /**
-          * @function bindNativeEvents  Must call:
-          * @example async bindNativeEvents(form: FormDefinition) {  return bindNativeInput(this.nativeElement, this, form); }
+          * @param form
+          * @see UIInputElement #bindNativeEvents
          */
         "bindNativeEvents": (form: FormDefinition) => Promise<void>;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @function checkValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async checkValidity() { return checkValidity(this, this.nativeElement); }
+          * @see UIInputElement #checkValidity
+          * @see HTMLInputElement #checkValidity
          */
         "checkValidity": () => Promise<any>;
         /**
-          * Must return the native Element
+          * sets the field as disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Retrieves the native {@link HTMLInputElement}
          */
         "getNativeElement": () => Promise<HTMLInputElement>;
         /**
-          * Must return value, in whatever format it has
+          * Returns the field value
          */
         "getValue": () => Promise<any>;
         /**
-          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+          * will translate to the form id attribute
          */
         "inputId": string;
         /**
-          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+          * will translate to the form name attribute
          */
         "inputName": string;
+        /**
+          * Will be used the prefix the fields names and ids to avoid conflicts with naive properties
+         */
         "inputPrefix"?: string;
+        /**
+          * The label text
+         */
         "label": string;
+        /**
+          * defines the maximum accepted value (inclusive)
+         */
         "max"?: number | string;
+        /**
+          * defines the maximum accepted length
+         */
         "maxlength"?: number | string;
+        /**
+          * defines the minimum accepted value (inclusive)
+         */
         "min"?: number | string;
+        /**
+          * defines the minimum accepted length
+         */
         "minlength"?: number | string;
+        /**
+          * defines the accepted REGEXP pattern
+         */
         "pattern"?: string;
+        /**
+          * Placeholder attribute
+         */
         "placeholder"?: string;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @function reportValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async reportValidity() { return reportValidity(this, this.nativeElement); }
+          * @see UIInputElement #reportValidity
+          * @see HTMLInputElement #reportValidity
          */
         "reportValidity": () => Promise<any>;
         /**
-          * HTML5 validation Attributes
+          * Sets the field as required when set to true
          */
         "required": boolean | "true" | "false";
         /**
-          * Must clear the value
+          * Resets the field value
          */
         "reset": () => Promise<void>;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @param errors
-          * @function reportValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async setCustomValidity(errors) { return setCustomValidity(this, this.nativeElement, errors); }
+          * @see UIInputElement #setCustomValidity
+          * @see HTMLInputElement #setCustomValidity
          */
         "setCustomValidity": (errors: string) => Promise<any>;
+        /**
+          * defined the accepted value step
+         */
         "step"?: number | string;
         /**
-          * type of the input field
+          * Subtype attribute. used for custom validation
+         */
+        "subtype"?: string;
+        /**
+          * The field type
          */
         "type": "text" | "number" | "date" | "email" | "url";
         /**
-          * Value of the input field
+          * value holding attribute
          */
         "value": string;
     }
@@ -86,7 +117,13 @@ export namespace Components {
           * Enables/disables custom validators and custom error messages
          */
         "customValidation": boolean;
+        /**
+          * The form definition according to {@link FormDefinition} in string or object format. If none is provided, the HTML content will be displayed
+         */
         "formDefinition"?: string | FormDefinition;
+        /**
+          * Translates to the inner form's id attribute
+         */
         "formId": string;
         /**
           * To avoid conflicts it's better to prefix id and names
@@ -103,79 +140,114 @@ export namespace Components {
     }
     interface IonicUiInputElement {
         /**
-          * @function bindNativeEvents  Must call:
-          * @example async bindNativeEvents(form: FormDefinition) {  return bindNativeInput(this.nativeElement, this, form); }
+          * @param form
+          * @see UIInputElement #bindNativeEvents
          */
         "bindNativeEvents": (form: FormDefinition) => Promise<void>;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @function checkValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async checkValidity() { return checkValidity(this, this.nativeElement); }
+          * @see UIInputElement #checkValidity
+          * @see HTMLInputElement #checkValidity
          */
         "checkValidity": () => Promise<any>;
+        /**
+          * defines if the clear button shows
+         */
         "clearInput": boolean;
+        /**
+          * sets the field as disabled
+         */
         "disabled"?: boolean;
         /**
-          * Must return the native Element
+          * Retrieves the native {@link HTMLInputElement}
          */
         "getNativeElement": () => Promise<HTMLInputElement>;
         /**
-          * Must return value, in whatever format it has
+          * Returns the field value
          */
         "getValue": () => Promise<any>;
         /**
-          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+          * will translate to the form id attribute
          */
         "inputId": string;
         /**
-          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+          * will translate to the form name attribute
          */
         "inputName": string;
+        /**
+          * Will be used the prefix the fields names and ids to avoid conflicts with naive properties
+         */
         "inputPrefix"?: string;
+        /**
+          * The label text
+         */
         "label"?: string;
+        /**
+          * Defines the Ionic label position
+         */
         "labelPosition": "fixed" | "floating" | "stacked";
+        /**
+          * defines the Ion-item lines
+         */
         "lines": "inset" | "full" | "none";
-        "max"?: string | number;
-        "maxlength"?: string | number;
-        "min"?: string | number;
-        "minlength"?: string | number;
+        /**
+          * defines the maximum accepted value (inclusive)
+         */
+        "max"?: number | string;
+        /**
+          * defines the maximum accepted length
+         */
+        "maxlength"?: number | string;
+        /**
+          * defines the minimum accepted value (inclusive)
+         */
+        "min"?: number | string;
+        /**
+          * defines the minimum accepted length
+         */
+        "minlength"?: number | string;
+        /**
+          * defines the accepted REGEXP pattern
+         */
         "pattern"?: string;
+        /**
+          * Placeholder attribute
+         */
         "placeholder"?: string;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @function reportValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async reportValidity() { return reportValidity(this, this.nativeElement); }
+          * @see UIInputElement #reportValidity
+          * @see HTMLInputElement #reportValidity
          */
         "reportValidity": () => Promise<any>;
         /**
-          * HTML5 validation Attributes
+          * Sets the field as required when set to true
          */
-        "required"?: boolean | "true" | "false";
+        "required": boolean | "true" | "false";
         /**
-          * Must clear the value
+          * Resets the field value
          */
         "reset": () => Promise<void>;
         /**
           * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-          * @param errors
-          * @function reportValidity  <strong>must be defined as:</strong>
-          * @example 
-          * @method () async setCustomValidity(errors) { return setCustomValidity(this, this.nativeElement, errors); }
+          * @see UIInputElement #setCustomValidity
+          * @see HTMLInputElement #setCustomValidity
          */
         "setCustomValidity": (errors: string) => Promise<any>;
-        "step"?: string | number;
         /**
-          * To enable custom validators
+          * defined the accepted value step
+         */
+        "step"?: number | string;
+        /**
+          * Subtype attribute. used for custom validation
          */
         "subtype"?: string;
         /**
-          * type of the input field
+          * The field type
          */
         "type": string;
         /**
-          * Value of the input field
+          * value holding attribute
          */
         "value": string;
     }
@@ -208,32 +280,67 @@ declare global {
 declare namespace LocalJSX {
     interface BasicUiInputElement {
         /**
-          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+          * sets the field as disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * will translate to the form id attribute
          */
         "inputId"?: string;
         /**
-          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+          * will translate to the form name attribute
          */
         "inputName"?: string;
+        /**
+          * Will be used the prefix the fields names and ids to avoid conflicts with naive properties
+         */
         "inputPrefix"?: string;
+        /**
+          * The label text
+         */
         "label"?: string;
+        /**
+          * defines the maximum accepted value (inclusive)
+         */
         "max"?: number | string;
+        /**
+          * defines the maximum accepted length
+         */
         "maxlength"?: number | string;
+        /**
+          * defines the minimum accepted value (inclusive)
+         */
         "min"?: number | string;
+        /**
+          * defines the minimum accepted length
+         */
         "minlength"?: number | string;
+        /**
+          * defines the accepted REGEXP pattern
+         */
         "pattern"?: string;
+        /**
+          * Placeholder attribute
+         */
         "placeholder"?: string;
         /**
-          * HTML5 validation Attributes
+          * Sets the field as required when set to true
          */
         "required"?: boolean | "true" | "false";
+        /**
+          * defined the accepted value step
+         */
         "step"?: number | string;
         /**
-          * type of the input field
+          * Subtype attribute. used for custom validation
+         */
+        "subtype"?: string;
+        /**
+          * The field type
          */
         "type"?: "text" | "number" | "date" | "email" | "url";
         /**
-          * Value of the input field
+          * value holding attribute
          */
         "value"?: string;
     }
@@ -246,7 +353,13 @@ declare namespace LocalJSX {
           * Enables/disables custom validators and custom error messages
          */
         "customValidation"?: boolean;
+        /**
+          * The form definition according to {@link FormDefinition} in string or object format. If none is provided, the HTML content will be displayed
+         */
         "formDefinition"?: string | FormDefinition;
+        /**
+          * Translates to the inner form's id attribute
+         */
         "formId"?: string;
         /**
           * To avoid conflicts it's better to prefix id and names
@@ -258,10 +371,12 @@ declare namespace LocalJSX {
         "method"?: "GET" | "POST" | "PUT";
         /**
           * Event is raised when the form is reset
+          * @event resetEvent
          */
         "onResetEvent"?: (event: CustomEvent<any>) => void;
         /**
           * Event with the form data is raised if no form {@link action} is defined
+          * @event submitEvent
          */
         "onSubmitEvent"?: (event: CustomEvent<FormResult>) => void;
         /**
@@ -270,41 +385,80 @@ declare namespace LocalJSX {
         "validateOnChange"?: boolean;
     }
     interface IonicUiInputElement {
+        /**
+          * defines if the clear button shows
+         */
         "clearInput"?: boolean;
+        /**
+          * sets the field as disabled
+         */
         "disabled"?: boolean;
         /**
-          * The id of the wrapper component Should be replicated to the inner component with an id prefix
+          * will translate to the form id attribute
          */
         "inputId"?: string;
         /**
-          * The name of the 'form' submitting element. should be prefixed to avoid conflicts
+          * will translate to the form name attribute
          */
         "inputName"?: string;
+        /**
+          * Will be used the prefix the fields names and ids to avoid conflicts with naive properties
+         */
         "inputPrefix"?: string;
+        /**
+          * The label text
+         */
         "label"?: string;
+        /**
+          * Defines the Ionic label position
+         */
         "labelPosition"?: "fixed" | "floating" | "stacked";
+        /**
+          * defines the Ion-item lines
+         */
         "lines"?: "inset" | "full" | "none";
-        "max"?: string | number;
-        "maxlength"?: string | number;
-        "min"?: string | number;
-        "minlength"?: string | number;
+        /**
+          * defines the maximum accepted value (inclusive)
+         */
+        "max"?: number | string;
+        /**
+          * defines the maximum accepted length
+         */
+        "maxlength"?: number | string;
+        /**
+          * defines the minimum accepted value (inclusive)
+         */
+        "min"?: number | string;
+        /**
+          * defines the minimum accepted length
+         */
+        "minlength"?: number | string;
+        /**
+          * defines the accepted REGEXP pattern
+         */
         "pattern"?: string;
+        /**
+          * Placeholder attribute
+         */
         "placeholder"?: string;
         /**
-          * HTML5 validation Attributes
+          * Sets the field as required when set to true
          */
         "required"?: boolean | "true" | "false";
-        "step"?: string | number;
         /**
-          * To enable custom validators
+          * defined the accepted value step
+         */
+        "step"?: number | string;
+        /**
+          * Subtype attribute. used for custom validation
          */
         "subtype"?: string;
         /**
-          * type of the input field
+          * The field type
          */
         "type"?: string;
         /**
-          * Value of the input field
+          * value holding attribute
          */
         "value"?: string;
     }

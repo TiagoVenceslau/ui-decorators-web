@@ -5,12 +5,21 @@ import {HTML5DateFormat, UIKeys, ValidatableByAttribute} from "./constants";
 import {h} from "@stencil/core";
 import {detect} from "detect-browser";
 
+/**
+ * @typedef ValidationKeys
+ * @memberOf ui-decorators-web.ui
+ */
 type ValidationsByKey = {
   [indexer: string]: {
     [indexer: string]: UIElementDefinition
   }[]
 }
 
+/**
+ * @function formatByType
+ *
+ * @memberOf ui-decorators-web.ui
+ */
 const formatByType = function(type, value){
   switch (type) {
     case UIKeys.DATE:
@@ -102,12 +111,49 @@ export function render<T extends UIModel>(model: T, mode?: string){
 
 setRenderStrategy(render);
 
+/**
+ * Function type to trasnform the several errors messages in a single one each browser can represent properly
+ * (due to the current error popups styling impossibilities presented by browsers)
+ *
+ * @typedef BrowserErrorWriter
+ * @memberOf ui-decorators-web.ui
+ */
 export type BrowserErrorWriter = (errors: string[]) => string;
 
+/**
+ * {@link BrowserErrorWriter} for chrome (and the default one)
+ * @param {string[]} errors
+ *
+ * @function chromeErrorWriter
+ *
+ * @see BrowserErrorWriter
+ *
+ * @memberOf ui-decorators-web.ui
+ */
 const chromeErrorWriter = (errors: string[]) => errors.join('\n');
 
+/**
+ * {@link BrowserErrorWriter} for firefox
+ * @param {string[]} errors
+ *
+ * @function firefoxErrorWriter
+ *
+ * @see BrowserErrorWriter
+ *
+ * @memberOf ui-decorators-web.ui
+ */
 const firefoxErrorWriter = (errors: string[]) => errors.join(' | ');
 
+/**
+ * Uses the tiny 'detect-browser' package to customize the message appearance by browser
+ * @param {string[]} errors
+ *
+ * @function getBrowserErrorMessage
+ *
+ * @see BrowserErrorWriter
+ *
+ * @memberOf ui-decorators-web.ui
+ */
 export function getBrowserErrorMessage(errors: string[]){
   const browser = detect();
   switch (browser && browser.name) {

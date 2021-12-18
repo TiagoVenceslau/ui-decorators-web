@@ -1,4 +1,5 @@
 .github
+.vscode
 /bin
 /src
 /docs
@@ -12,3 +13,4 @@ jsdocs.json
 mdCompile.json
 nodemon.json
 tsconfig.json
+stencil.config.ts

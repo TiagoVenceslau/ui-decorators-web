@@ -20,16 +20,23 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
+    "build:prod": "stencuil build",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "prepare-release": "npm run build:prod && npm run docs",
+    "release": "./bin/tag-release.sh",
+    "clean-publish": "npx clean-publish",
+    "coverage": "npm test && npm install jest-coverage-badges && jest-coverage-badges --input \"./workdocs/coverage/coverage-summary.json\" --output \"./workdocs/badges\" && npm uninstall jest-coverage-badges",
+    "docs": "npm run coverage && npx rimraf ./docs/* && cp -r ./workdocs/assets ./docs/assets && npm install better-docs taffydb && npx markdown-include ./mdCompile.json && npx jsdoc -c jsdocs.json -t ./node_modules/better-docs  && npm remove better-docs taffydb"
   },
   "dependencies": {
     "@stencil/core": "^2.11.0",
     "detect-browser": "^5.3.0"
   },
   "devDependencies": {
+    "@ionic/core": "latest",
     "@tvenceslau/decorator-validation": "1.8.0",
     "@tvenceslau/ui-decorators": "0.1.1",
     "@types/jest": "^26.0.24",
@@ -40,12 +47,12 @@
     "jsdoc": "^3.6.7",
     "jsdoc-mermaid": "^1.0.0",
     "markdown-include": "^0.4.3",
+    "parcel": "^2.0.1",
     "puppeteer": "^13.0.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
-    "typescript": "^4.3.5",
-    "@ionic/core": "latest"
+    "typescript": "^4.3.5"
   },
   "license": "MIT"
 }

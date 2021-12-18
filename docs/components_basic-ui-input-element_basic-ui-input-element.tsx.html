@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Decorator Based HTML5 form generation engirne with static and dynamic validation components/basic-ui-input-element/basic-ui-input-element.tsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">UI Decorators Web</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-01_Demo.html">
+                                01_Demo
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/TiagoVenceslau/ui-elements-web#readme"
+                        >
+                            Github Repository
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/TiagoVenceslau"
+                        >
+                            Github Profile
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-ui-decorators-web.html">ui-decorators-web</a></li></ul><h3>Namespaces</h3><ul><li><a href="ui-decorators-web.services.html">services</a></li><li><a href="ui-decorators-web.utils.html">utils</a></li></ul><h3>Classes</h3><ul><li><a href="BasicUiInputElement.html">BasicUiInputElement</a></li><li><a href="EqualityValidator.html">EqualityValidator</a></li><li><a href="FormValidateSubmit.html">FormValidateSubmit</a></li><li><a href="IonicUiInputElement.html">IonicUiInputElement</a></li><li><a href="TranslationServiceImp.html">TranslationServiceImp</a></li></ul><h3>Interfaces</h3><ul><li><a href="TranslationService.html">TranslationService</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:resetEvent">resetEvent</a></li><li><a href="global.html#event:submitEvent">submitEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTML5Events">HTML5Events</a></li><li><a href="global.html#webValidationKeys">webValidationKeys</a></li></ul></div><div class="category"><h2>Validators</h2><h3>Classes</h3><ul><li><a href="EqualityValidator.html">EqualityValidator</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/basic-ui-input-element/basic-ui-input-element.tsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {Component, Host, h, Method, Prop, Element} from '@stencil/core';
+import {ValidationKeys} from "@tvenceslau/decorator-validation/lib";
+import {FormDefinition, UIInputElement} from "../../ui/types";
+import {UIKeys} from "../../ui";
+import {bindNativeInput, checkValidity, reportValidity, setCustomValidity, prefixName} from "../../utils";
+
+/**
+ * Wrapper around basic HTML5 elements just to demonstrate functionality
+ *
+ * @implements UIInputElement
+ * @component BasicInputElement
+ *
+ * @example
+ * &lt;basic-ui-input-element input-id={"id"}
+ *                         input-name={"id"}
+ *                         input-prefix={"input-"}
+ *                         type={"text"}
+ *                         placeholder={"place text here"}
+ *                         label={"This is a label"}
+ *                         required={"true"}
+ *                         maxlength={"15"}
+ *                         minlength={"5"}
+ *                         pattern={"^\w+$"}
+ * >&lt;/basic-ui-input-element>
+ */
+@Component({
+  tag: 'basic-ui-input-element',
+  styleUrl: 'basic-ui-input-element.css',
+  shadow: false,
+})
+export class BasicUiInputElement implements UIInputElement{
+  /**
+   * Reference to the its {@link HTMLElement}
+   */
+  @Element() element;
+  /**
+   * will translate to the form id attribute
+   */
+  @Prop({attribute: 'input-id'}) inputId: string;
+  /**
+   * will translate to the form name attribute
+   */
+  @Prop({attribute: 'input-name'}) inputName: string;
+  /**
+   * Will be used the prefix the fields names and ids to avoid conflicts with naive properties
+   */
+  @Prop({attribute: 'input-prefix'}) inputPrefix?: string = UIKeys.NAME_PREFIX;
+  /**
+   * The label text
+   */
+  @Prop() label: string;
+  /**
+   * The field type
+   */
+  @Prop() type: "text" | "number" | "date" | "email" | "url" = "text";
+  /**
+   * value holding attribute
+   */
+  @Prop({attribute: "value", mutable: true, reflect: true}) value: string;
+  /**
+   * Placeholder attribute
+   */
+  @Prop({attribute: "placeholder"}) placeholder?: string;
+  /**
+   * Subtype attribute. used for custom validation
+   */
+  @Prop({attribute: "subtype", mutable: false}) subtype?: string;
+  /**
+   * sets the field as disabled
+   */
+  @Prop({attribute: "disabled"}) disabled?: boolean;
+
+
+  /**
+   * Sets the field as required when set to true
+   */
+  @Prop() required: boolean | "true" | "false" = false;
+  /**
+   * defines the minimum accepted length
+   */
+  @Prop({attribute: "minlength"}) minlength?: number | string;
+  /**
+   * defines the minimum accepted value (inclusive)
+   */
+  @Prop({attribute: "min"}) min?: number | string;
+  /**
+   * defines the maximum accepted value (inclusive)
+   */
+  @Prop({attribute: "max"}) max?: number | string;
+  /**
+   * defined the accepted value step
+   */
+  @Prop({attribute: "step"}) step?: number | string;
+  /**
+   * defines the maximum accepted length
+   */
+  @Prop({attribute: "maxlength"}) maxlength?: number | string;
+  /**
+   * defines the accepted REGEXP pattern
+   */
+  @Prop({attribute: "pattern"}) pattern?: string;
+
+  /**
+   * Holds the reference to the inner native {@link HTMLInputElement}
+   * @private
+   */
+  private nativeElement: HTMLInputElement;
+
+  /**
+   * Stencil lifecycle method - Loads the component
+   */
+  componentDidLoad(){
+    this.nativeElement = this.element.querySelector('input');
+  }
+
+  /**
+   * Retrieves the native {@link HTMLInputElement}
+   */
+  @Method()
+  async getNativeElement(): Promise&lt;HTMLInputElement> {
+    return this.nativeElement;
+  }
+
+  /**
+   * Returns the field value
+   */
+  @Method()
+  async getValue(): Promise&lt;any> {
+    return this.nativeElement.value;
+  }
+
+  /**
+   * Resets the field value
+   */
+  @Method()
+  async reset(): Promise&lt;void> {
+    this.nativeElement.value = '';
+  }
+
+  /**
+   * @see UIInputElement#checkValidity
+   * @see HTMLInputElement#checkValidity
+   */
+  @Method()
+  async checkValidity() {
+    return checkValidity(this, this.nativeElement);
+  }
+
+  /**
+   * @see UIInputElement#reportValidity
+   * @see HTMLInputElement#reportValidity
+   */
+  @Method()
+  async reportValidity() {
+    return reportValidity(this, this.nativeElement);
+  }
+
+  /**
+   * @see UIInputElement#setCustomValidity
+   * @see HTMLInputElement#setCustomValidity
+   */
+  @Method()
+  async setCustomValidity(errors: string) {
+    return setCustomValidity(this, this.nativeElement, errors);
+  }
+
+  /**
+   *
+   * @param {FormDefinition} form
+   * @see UIInputElement#bindNativeEvents
+   */
+  @Method()
+  async bindNativeEvents(form: FormDefinition) {
+    bindNativeInput(this.nativeElement, this, form);
+  }
+
+  /**
+   * Retrieves the input props
+   * @private
+   */
+  private getInputProps(){
+    const props = {};
+    if (this.required &amp;&amp; (this.required === 'true' || this.required === true))
+      props[ValidationKeys.REQUIRED] = "true";
+    if (this.minlength)
+      props[ValidationKeys.MIN_LENGTH] = this.minlength;
+    if (this.maxlength)
+      props[ValidationKeys.MAX_LENGTH] = this.maxlength;
+    if (this.min)
+      props[ValidationKeys.MIN] = this.min;
+    if (this.max)
+      props[ValidationKeys.MAX] = this.max;
+    if (this.step)
+      props[ValidationKeys.STEP] = this.step;
+    if (this.pattern)
+      props[ValidationKeys.PATTERN] = this.pattern;
+    if (this.placeholder)
+      props['placeholder'] = this.placeholder;
+    return props;
+  }
+
+  /**
+   * Stencil lifecycle method - Renders the component
+   */
+  render() {
+    return (
+      &lt;Host id={this.inputId}>
+        &lt;div class="input-wrapper">
+          &lt;label htmlfor={prefixName(this.inputId, this.inputPrefix)}>{this.label}&lt;/label>
+          &lt;input id={prefixName(this.inputId, this.inputPrefix)} name={prefixName(this.inputName, this.inputPrefix)} type={this.type} {...this.getInputProps()} value={this.value}/>
+          &lt;br/>
+        &lt;/div>
+      &lt;/Host>
+    );
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+</body>
+</html>

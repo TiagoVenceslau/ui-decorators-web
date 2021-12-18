@@ -3,6 +3,14 @@ import {convertAttributeNameToWeb, UIKeys, ValidatableByAttribute, ValidatableBy
 import {DEFAULT_ERROR_MESSAGES, ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {getTranslationService} from "../services/locale";
 
+/**
+ * Rebuilds the {@link FormDefinition} fro the {@link UIInputElement}s and their attributes
+ * @param {UIInputElement[]} fields
+ *
+ * @function getFormDefinitionFields
+ *
+ * @memberOf ui-decorators-web.utils
+ */
 export async function getFormDefinitionFromFields(fields: UIInputElement[]): Promise<FormDefinition> {
 
   function getValidatorDefinition(field: HTMLInputElement): {[indexer: string]: ValidatorDefinition}{

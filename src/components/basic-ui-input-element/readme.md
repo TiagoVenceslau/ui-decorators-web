@@ -7,43 +7,51 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                                   | Type                                               | Default              |
-| ------------- | -------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------- | -------------------- |
-| `inputId`     | `input-id`     | The id of the wrapper component Should be replicated to the inner component with an id prefix | `string`                                           | `undefined`          |
-| `inputName`   | `input-name`   | The name of the 'form' submitting element. should be prefixed to avoid conflicts              | `string`                                           | `undefined`          |
-| `inputPrefix` | `input-prefix` |                                                                                               | `string`                                           | `UIKeys.NAME_PREFIX` |
-| `label`       | `label`        |                                                                                               | `string`                                           | `undefined`          |
-| `max`         | `max`          |                                                                                               | `number \| string`                                 | `undefined`          |
-| `maxlength`   | `maxlength`    |                                                                                               | `number \| string`                                 | `undefined`          |
-| `min`         | `min`          |                                                                                               | `number \| string`                                 | `undefined`          |
-| `minlength`   | `minlength`    |                                                                                               | `number \| string`                                 | `undefined`          |
-| `pattern`     | `pattern`      |                                                                                               | `string`                                           | `undefined`          |
-| `placeholder` | `placeholder`  |                                                                                               | `string`                                           | `undefined`          |
-| `required`    | `required`     | HTML5 validation Attributes                                                                   | `"false" \| "true" \| boolean`                     | `false`              |
-| `step`        | `step`         |                                                                                               | `number \| string`                                 | `undefined`          |
-| `type`        | `type`         | type of the input field                                                                       | `"date" \| "email" \| "number" \| "text" \| "url"` | `"text"`             |
-| `value`       | `value`        | Value of the input field                                                                      | `string`                                           | `undefined`          |
-
-
-## Events
-
-| Event          | Description        | Type               |
-| -------------- | ------------------ | ------------------ |
-| `blurEvent`    |                    | `CustomEvent<any>` |
-| `changeEvent`  | HTML5 input events | `CustomEvent<any>` |
-| `copyEvent`    |                    | `CustomEvent<any>` |
-| `cutEvent`     |                    | `CustomEvent<any>` |
-| `focusEvent`   |                    | `CustomEvent<any>` |
-| `inputEvent`   |                    | `CustomEvent<any>` |
-| `invalidEvent` |                    | `CustomEvent<any>` |
-| `pasteEvent`   |                    | `CustomEvent<any>` |
+| Property      | Attribute      | Description                                                                               | Type                                               | Default              |
+| ------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------- | -------------------- |
+| `disabled`    | `disabled`     | sets the field as disabled                                                                | `boolean`                                          | `undefined`          |
+| `inputId`     | `input-id`     | will translate to the form id attribute                                                   | `string`                                           | `undefined`          |
+| `inputName`   | `input-name`   | will translate to the form name attribute                                                 | `string`                                           | `undefined`          |
+| `inputPrefix` | `input-prefix` | Will be used the prefix the fields names and ids to avoid conflicts with naive properties | `string`                                           | `UIKeys.NAME_PREFIX` |
+| `label`       | `label`        | The label text                                                                            | `string`                                           | `undefined`          |
+| `max`         | `max`          | defines the maximum accepted value (inclusive)                                            | `number \| string`                                 | `undefined`          |
+| `maxlength`   | `maxlength`    | defines the maximum accepted length                                                       | `number \| string`                                 | `undefined`          |
+| `min`         | `min`          | defines the minimum accepted value (inclusive)                                            | `number \| string`                                 | `undefined`          |
+| `minlength`   | `minlength`    | defines the minimum accepted length                                                       | `number \| string`                                 | `undefined`          |
+| `pattern`     | `pattern`      | defines the accepted REGEXP pattern                                                       | `string`                                           | `undefined`          |
+| `placeholder` | `placeholder`  | Placeholder attribute                                                                     | `string`                                           | `undefined`          |
+| `required`    | `required`     | Sets the field as required when set to true                                               | `"false" \| "true" \| boolean`                     | `false`              |
+| `step`        | `step`         | defined the accepted value step                                                           | `number \| string`                                 | `undefined`          |
+| `subtype`     | `subtype`      | Subtype attribute. used for custom validation                                             | `string`                                           | `undefined`          |
+| `type`        | `type`         | The field type                                                                            | `"date" \| "email" \| "number" \| "text" \| "url"` | `"text"`             |
+| `value`       | `value`        | value holding attribute                                                                   | `string`                                           | `undefined`          |
 
 
 ## Methods
 
+### `bindNativeEvents(form: FormDefinition) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `checkValidity() => Promise<any>`
+
+HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
 ### `getNativeElement() => Promise<HTMLInputElement>`
 
-Must return the native Element
+Retrieves the native {@link HTMLInputElement}
 
 #### Returns
 
@@ -53,7 +61,17 @@ Type: `Promise<HTMLInputElement>`
 
 ### `getValue() => Promise<any>`
 
-Must return value, in whatever format it has
+Returns the field value
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `reportValidity() => Promise<any>`
+
+HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
 
 #### Returns
 
@@ -63,11 +81,21 @@ Type: `Promise<any>`
 
 ### `reset() => Promise<void>`
 
-Must clear the value
+Resets the field value
 
 #### Returns
 
 Type: `Promise<void>`
+
+
+
+### `setCustomValidity(errors: string) => Promise<any>`
+
+HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
+
+#### Returns
+
+Type: `Promise<any>`
 
 
 

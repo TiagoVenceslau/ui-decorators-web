@@ -44,36 +44,6 @@ export interface UIInputProps {
 export interface UIInputElement extends UIInputProps {
   inputPrefix?: string;
 
-  // /**
-  //  * HTML5 input events
-  //  */
-  // changeEvent?;
-  // inputEvent?;
-  // invalidEvent?;
-  //
-  // cutEvent?;
-  // copyEvent?;
-  // pasteEvent?;
-  //
-  // /**
-  //  * Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
-  //  * @param e
-  //  */
-  // handleChangeEvent?(e): void;
-  // handleInputEvent?(e): void;
-  // handleInvalidEvent?(e): void;
-  // handleCutEvent?(e): void;
-  // handleCopyEvent?(e): void;
-  // handlePasteEvent?(e): void;
-  // handleBlurEvent?(e): void;
-  // handleFocusEvent?(e): void;
-
-  /**
-   * HTML5 validation props
-   */
-  readonly validity?: ValidityState;
-  readonly validationMessage?: string;
-
   /**
    * HTML5 validation methods. Will be bound via {@link bindNativeInput} during the 'componentWillLoad' lifecyle
    *

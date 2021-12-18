@@ -1,5 +1,5 @@
 /**
- * @namespace utils
+ * @namespace ui-decorators-web.utils
  * @memberOf ui-decorators-web
  */
 

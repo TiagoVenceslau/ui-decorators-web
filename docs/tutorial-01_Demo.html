@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Decorator Based HTML5 form generation engirne with static and dynamic validation index.ts</title>
+  <title>Decorator Based HTML5 form generation engirne with static and dynamic validation 01_Demo</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -98,7 +96,7 @@
 </div>
     <div id="main">
         <div
-            class="sidebar "
+            class="sidebar tutorials"
             id="sidebarNav"
         >
             
@@ -108,34 +106,82 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-ui-decorators-web.html">ui-decorators-web</a></li></ul><h3>Namespaces</h3><ul><li><a href="ui-decorators-web.services.html">services</a></li><li><a href="ui-decorators-web.utils.html">utils</a></li></ul><h3>Classes</h3><ul><li><a href="BasicUiInputElement.html">BasicUiInputElement</a></li><li><a href="EqualityValidator.html">EqualityValidator</a></li><li><a href="FormValidateSubmit.html">FormValidateSubmit</a></li><li><a href="IonicUiInputElement.html">IonicUiInputElement</a></li><li><a href="TranslationServiceImp.html">TranslationServiceImp</a></li></ul><h3>Interfaces</h3><ul><li><a href="TranslationService.html">TranslationService</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:resetEvent">resetEvent</a></li><li><a href="global.html#event:submitEvent">submitEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#HTML5Events">HTML5Events</a></li><li><a href="global.html#webValidationKeys">webValidationKeys</a></li></ul></div><div class="category"><h2>Validators</h2><h3>Classes</h3><ul><li><a href="EqualityValidator.html">EqualityValidator</a></li></ul></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-01_Demo.html">01_Demo</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>index.ts</h1>
+                    <p>Tutorial</p>
+                    <h1>01_Demo</h1>
                 </header>
-                
+                <section>
 
+<article>
+    <!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>UI Decorators Web Demonstrator</title>
 
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@tvenceslau/decorator-validation/dist/esm/index.bundle.min.esm.js"></script>
+  <script type="nomodule" src="https://cdn.jsdelivr.net/npm/@tvenceslau/decorator-validation/dist/index.bundle.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators/dist/esm/index.bundle.min.esm.js"></script>
+  <script type="nomodule" src="https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators/dist/index.bundle.min.js"></script>
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @module ui-decorators-web
- */
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
 
-export * from './ui';
-</code></pre>
-        </article>
-    </section>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators/dist/esm/index.bundle.min.esm.js"></script>
+  <script type="nomodule" src="https://cdn.jsdelivr.net/npm/@tvenceslau/ui-decorators/dist/index.bundle.min.js"></script>
 
+  <script type="module" src="../../node_modules/@tvenceslau/ui-decorators-web/dist/esm/index.bundle.min.esm.js"></script>
+  <script type="nomodule" src="../../node_modules/@tvenceslau/ui-decorators-web/dist/index.bundle.min.js"></script>
 
+</head>
+<body>
+<h3>Form Validate Submit test Area</h3>
+<form-validate-submit form-id="test-id">
+  <div slot="fields">
+    <ionic-ui-input-element input-id="ionic-id"
+                            input-name="ionic-id"
+                            input-prefix="input-"
+                            type="text"
+                            placeholder="place text here"
+                            label="This is a label"
+                            required="true"
+                            maxlength="15"
+                            minlength="5"
+                            pattern="^\w+$"
+    ></ionic-ui-input-element>
+    <basic-ui-input-element input-id="basic-id"
+                            input-name="basic-id"
+                            input-prefix="input-"
+                            type="text"
+                            placeholder="place text here"
+                            label="This is a label"
+                            required="true"
+                            maxlength="15"
+                            minlength="5"
+                            pattern="^\w+$"
+    ></basic-ui-input-element>
+  </div>
+  <div slot="buttons">
+    <ion-buttons>
+      <ion-button type="reset">Reset</ion-button>
+      <ion-button color="primary" type="submit">Submit</ion-button>
+    </ion-buttons>
+  </div>
+</form-validate-submit>
+</body>
+</html>
 
+</article>
+
+</section>
 
             </div>
             

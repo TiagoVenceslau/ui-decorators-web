@@ -13,7 +13,7 @@ import DateValidator from '@tvenceslau/decorator-validation/lib/validation/Valid
 
 /**
  * @typedef ValidityStateMatcherType
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export type ValidityStateMatcherType = {"tooShort": string, "typeMismatch": string, "stepMismatch": string, "rangeOverflow": string, /*badInput: undefined, customError: undefined,*/ "tooLong": string, "patternMismatch": string, "rangeUnderflow": string, "valueMissing": string}
 
@@ -22,7 +22,7 @@ export type ValidityStateMatcherType = {"tooShort": string, "typeMismatch": stri
  *
  * @enum UIKeys
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const ValidityStateMatcher: ValidityStateMatcherType = {
     "patternMismatch": "pattern",
@@ -38,7 +38,7 @@ export const ValidityStateMatcher: ValidityStateMatcherType = {
 /**
  * @enum CSS_SELECTORS
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const CSS_SELECTORS: {[indexer: string]: string} = {
   INNER_SLOT_ITEMS: 'div[slot={0}] > *, slot-fb[name={0}] > *',
@@ -50,7 +50,7 @@ export const CSS_SELECTORS: {[indexer: string]: string} = {
 /**
  * @enum UIKeys
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const UIKeys = {
     REFLECT: 'model.ui.',
@@ -76,7 +76,7 @@ export const UIKeys = {
 /**
  * @constant ValidatableByType
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const ValidatableByType: {[indexer: string] : {new(): Validator}} = [
     {validationKey: UIKeys.EMAIL, validator: EmailValidator},
@@ -91,7 +91,7 @@ export const ValidatableByType: {[indexer: string] : {new(): Validator}} = [
 /**
  * @constant ValidatableByAttribute
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const ValidatableByAttribute: {[indexer: string] : {new(): Validator}} = [
     {validationKey: UIKeys.REQUIRED, validator: RequiredValidator},
@@ -121,14 +121,14 @@ export function convertAttributeNameToWeb(attName: string){
 /**
  * @constant HTML5DateFormat
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const HTML5DateFormat = 'yyyy-MM-dd';
 
 /**
  * @constant HTML5InputTypes
  *
- * @memberOf ui-decorators.ui
+ * @memberOf ui-decorators-web.ui
  */
 export const HTML5InputTypes = {
     TEXT: 'text',

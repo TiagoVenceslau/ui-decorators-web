@@ -1,7 +1,3 @@
-/**
- * @namespace ui-decorators-web.services.validations
- * @memberOf ui-decorators-web.services
- */
 
 import Validator from "@tvenceslau/decorator-validation/lib/validation/Validators/Validator";
 import {Validators} from "@tvenceslau/decorator-validation/lib/validation";
@@ -53,21 +49,4 @@ class EqualityValidator extends Validator {
     if (fields[fieldName].props.value !== value)
       return this.getMessage(this.message, fieldName);
   }
-}
-
-// getValidatorRegistry().register({
-//   validationKey: webValidationKeys.EQUALITY,
-//   validator: EqualityValidator
-// });
-
-/**
- * Validation service
- * Provides form validation for the front end
- * @memberOf Validations
- */
-export const ValidationService = {
-  Registry: getValidatorRegistry(),
-  Validators: Object.assign({}, Validators, {
-    EqualityValidator: EqualityValidator
-  })
 }

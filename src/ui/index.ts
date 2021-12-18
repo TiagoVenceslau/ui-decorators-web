@@ -1,5 +1,5 @@
 /**
- * @name ui-decorators.web.ui
- * @memberOf ui-decorators
+ * @name ui-decorators-web.ui
+ * @memberOf ui-decorators-web
  */
 export * from './constants';
