@@ -41,23 +41,23 @@ export class BasicUiInputElement implements UIInputElement{
   @Prop({attribute: "maxlength"}) maxlength?: number | string;
   @Prop({attribute: "pattern"}) pattern?: string;
 
-  // Element Basic UI Events
-  @Event()
-  changeEvent: EventEmitter;
-  @Event()
-  inputEvent: EventEmitter;
-  @Event()
-  invalidEvent: EventEmitter;
-  @Event()
-  cutEvent: EventEmitter;
-  @Event()
-  copyEvent: EventEmitter;
-  @Event()
-  pasteEvent: EventEmitter;
-  @Event()
-  focusEvent: EventEmitter;
-  @Event()
-  blurEvent: EventEmitter;
+  // // Element Basic UI Events
+  // @Event()
+  // changeEvent: EventEmitter;
+  // @Event()
+  // inputEvent: EventEmitter;
+  // @Event()
+  // invalidEvent: EventEmitter;
+  // @Event()
+  // cutEvent: EventEmitter;
+  // @Event()
+  // copyEvent: EventEmitter;
+  // @Event()
+  // pasteEvent: EventEmitter;
+  // @Event()
+  // focusEvent: EventEmitter;
+  // @Event()
+  // blurEvent: EventEmitter;
 
   private nativeElement: HTMLInputElement;
 

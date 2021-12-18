@@ -3,9 +3,9 @@ import {getValidatorRegistry, ValidatorDefinition} from '@tvenceslau/decorator-v
 import Validator from '@tvenceslau/decorator-validation/lib/validation/Validators/Validator';
 import {UIKeys, ValidatableByAttribute, ValidatableByType, ValidityStateMatcher, ValidityStateMatcherType} from "../ui";
 import {FormDefinition, InputDefinition, UIInputElement} from "../ui/types";
-import {EventEmitter} from "@stencil/core";
 import {stringFormat, ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {getTranslationService} from "../services/locale";
+import {getBrowserErrorMessage} from "../ui/render";
 
 /**
  * @enum HTML5Events
@@ -45,13 +45,9 @@ export function prefixName(name: string, prefix: string = UIKeys.NAME_PREFIX){
  * @memberOf ui-decorators-web.utils
  */
 export function getEventHandler(element: UIInputElement, event: HTML5Events, form: FormDefinition){
-  const evtName = event.toLowerCase() + "Event";
-  if (!element[evtName])
-    throw new Error(`Could not find ${event.toLowerCase()} event in ${element.constructor.name} webcomponent`);
-  const eventEmitter: EventEmitter = element[evtName];
 
   const defaultEventHandler = function(this: UIInputElement, e): void{
-    eventEmitter.emit(e);
+    //do nothing
   }
 
   const invalidEventHandler = function(this: UIInputElement, e): void {
@@ -65,13 +61,16 @@ export function getEventHandler(element: UIInputElement, event: HTML5Events, for
   }
 
   const inputEventHandler = async function(this: UIInputElement, e): Promise<void> {
-    e.preventDefault();
-    e.stopImmediatePropagation();
     await this.setCustomValidity('');
-    eventEmitter.emit(e);
+  }
+
+  const changeEventHandler = async function(this: UIInputElement, e): Promise<void> {
+    form.fields[this.inputName].props.value = e.target.value;
   }
 
   switch (event){
+    case HTML5Events.CHANGE:
+      return changeEventHandler.bind(element);
     case HTML5Events.INPUT:
       return inputEventHandler.bind(element);
     case HTML5Events.INVALID:
@@ -98,15 +97,7 @@ export function getEventHandler(element: UIInputElement, event: HTML5Events, for
 export function bindNativeInput(nativeInput: HTMLInputElement, inputElement: UIInputElement, form: FormDefinition){
   Object.values(HTML5Events).forEach(evt => {
     const nativeMethodKey = 'on' + evt.toLowerCase();
-    const methodKey = 'handle' + evt + "Event";
-    if (!inputElement[methodKey])
-      Object.defineProperty(inputElement, methodKey, {
-        enumerable: false,
-        writable: false,
-        configurable: false,
-        value: getEventHandler(inputElement, evt, form)
-      })
-    nativeInput[nativeMethodKey] = inputElement[methodKey].bind(inputElement);
+    nativeInput[nativeMethodKey] = getEventHandler(inputElement, evt, form);
   });
 }
 
@@ -122,6 +113,10 @@ export function setCustomValidity(inputElement, nativeElement, errors) {
   return nativeElement.setCustomValidity.call(nativeElement, errors);
 }
 
+/**
+ *
+ * @param element
+ */
 export function getInputProps(element: HTMLInputElement){
   const props = {};
   // @ts-ignore
@@ -273,7 +268,6 @@ const checkMessageTranslations = function(customValidity: ValidityStateMatcherTy
   }, undefined)
   if (invalids)
     return createErrorMessage(form, invalids, value);
-  console.log(`Field is valid`);
 }
 
 /**
@@ -288,31 +282,24 @@ const checkMessageTranslations = function(customValidity: ValidityStateMatcherTy
  * @memberOf ui-decorators-web.utils
  */
 export function performValidations(element: HTMLInputElement, inputDef: InputDefinition, form: FormDefinition, report = false){
-  let hasErrors = !element.validity.valid;
   let customValidity: ValidityStateMatcherType = matchValidityState(element.validity) as ValidityStateMatcherType;
   console.log(`Custom validity matching for ${element.name}: ${customValidity}`);
 
   const validatorRegistry = getValidatorRegistry();
 
-  const performCustomValidations = function(customValidity): ValidityStateMatcherType{
+  const performCustomValidations = function(customValidity): string[] {
     return Object.keys(inputDef.validation).reduce((accum, key) => {
-      const error = validatorRegistry.get(key).hasErrors(inputDef.props.value, inputDef.validation[key].message, ...inputDef.validation[key].args, form);
-      accum[key] = !!error;
+      const error = validatorRegistry.get(key).hasErrors(inputDef.props.value, ...inputDef.validation[key].args, inputDef.validation[key].message, form);
+      if (error)
+        accum.push(error);
       return accum;
-    }, customValidity);
+    }, []);
   }
 
-  if (form.customValidation){
-    customValidity = performCustomValidations(customValidity);
-    console.log(`Custom validity updated with custom validators for ${element.name}: ${customValidity}`);
-  }
+  const errors = performCustomValidations(customValidity);
 
-  const errors = checkMessageTranslations(customValidity, form, inputDef.props.value);
-  if (errors){
-    console.log(`Custom Errors found: ${errors}`);
-    hasErrors = true;
-    element.setCustomValidity(errors);
-  }
+  if (errors.length)
+    element.setCustomValidity(getBrowserErrorMessage(errors));
 
   if (report)
     element.reportValidity();

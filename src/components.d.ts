@@ -221,17 +221,6 @@ declare namespace LocalJSX {
         "maxlength"?: number | string;
         "min"?: number | string;
         "minlength"?: number | string;
-        "onBlurEvent"?: (event: CustomEvent<any>) => void;
-        /**
-          * HTML5 input events
-         */
-        "onChangeEvent"?: (event: CustomEvent<any>) => void;
-        "onCopyEvent"?: (event: CustomEvent<any>) => void;
-        "onCutEvent"?: (event: CustomEvent<any>) => void;
-        "onFocusEvent"?: (event: CustomEvent<any>) => void;
-        "onInputEvent"?: (event: CustomEvent<any>) => void;
-        "onInvalidEvent"?: (event: CustomEvent<any>) => void;
-        "onPasteEvent"?: (event: CustomEvent<any>) => void;
         "pattern"?: string;
         "placeholder"?: string;
         /**
@@ -299,16 +288,6 @@ declare namespace LocalJSX {
         "maxlength"?: string | number;
         "min"?: string | number;
         "minlength"?: string | number;
-        /**
-          * HTML5 input events
-         */
-        "onChangeEvent"?: (event: CustomEvent<any>) => void;
-        "onCopyEvent"?: (event: CustomEvent<any>) => void;
-        "onCutEvent"?: (event: CustomEvent<any>) => void;
-        "onFocusEvent"?: (event: CustomEvent<any>) => void;
-        "onInputEvent"?: (event: CustomEvent<any>) => void;
-        "onInvalidEvent"?: (event: CustomEvent<any>) => void;
-        "onPasteEvent"?: (event: CustomEvent<any>) => void;
         "pattern"?: string;
         "placeholder"?: string;
         /**

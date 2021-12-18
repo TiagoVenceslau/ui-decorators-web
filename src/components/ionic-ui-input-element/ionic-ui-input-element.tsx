@@ -34,21 +34,21 @@ export class IonicUiInputElement implements UIInputElement{
   @Prop({attribute: "pattern"}) pattern?: string;
   @Prop({attribute: "step"}) step?: string | number;
 
-  // Element Basic UI Events
-  @Event()
-  changeEvent: EventEmitter;
-  @Event()
-  inputEvent: EventEmitter;
-  @Event()
-  focusEvent: EventEmitter;
-  @Event()
-  invalidEvent: EventEmitter;
-  @Event()
-  cutEvent: EventEmitter;
-  @Event()
-  copyEvent: EventEmitter;
-  @Event()
-  pasteEvent: EventEmitter;
+  // // Element Basic UI Events
+  // @Event()
+  // changeEvent: EventEmitter;
+  // @Event()
+  // inputEvent: EventEmitter;
+  // @Event()
+  // focusEvent: EventEmitter;
+  // @Event()
+  // invalidEvent: EventEmitter;
+  // @Event()
+  // cutEvent: EventEmitter;
+  // @Event()
+  // copyEvent: EventEmitter;
+  // @Event()
+  // pasteEvent: EventEmitter;
 
   // Ionic custom properties
   @Prop({attribute: "label-position"}) labelPosition: "fixed" | "floating" | "stacked" = "floating";
@@ -82,30 +82,6 @@ export class IonicUiInputElement implements UIInputElement{
   @Method()
   async reset(): Promise<void> {
     this.ionElement.value = '';
-  }
-
-  handleChangeEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.changeEvent.emit(e);
-  }
-
-  handleFocusEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.focusEvent.emit(e);
-  }
-
-  handleBlurEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.focusEvent.emit(e);
-  }
-
-  handleInputEvent(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    this.inputEvent.emit(e)
   }
 
   @Method()
@@ -148,14 +124,14 @@ export class IonicUiInputElement implements UIInputElement{
                      step={this.step}
 
                      value={this.value}
-
-                     onIonChange={this.handleChangeEvent.bind(this)}
-                     onIonFocus={this.handleFocusEvent.bind(this)}
-                     onIonInput={this.handleInputEvent.bind(this)}
-                     onIonBlur={this.handleBlurEvent.bind(this)}
           ></ion-input>
         </ion-item>
       </Host>
     );
   }
 }
+//
+// {/*onIonChange={this.handleChangeEvent.bind(this)}*/}
+// {/*onIonFocus={this.handleFocusEvent.bind(this)}*/}
+// {/*onIonInput={this.handleInputEvent.bind(this)}*/}
+// {/*onIonBlur={this.handleBlurEvent.bind(this)}

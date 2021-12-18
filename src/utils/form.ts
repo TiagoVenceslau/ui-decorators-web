@@ -9,6 +9,8 @@ export async function getFormDefinitionFromFields(fields: UIInputElement[]): Pro
     const accumulator: {[indexer: string]: ValidatorDefinition} = {};
 
     const genValidatorDefinition = function(key: string, message?: string, ...args: any[]): void {
+      if (key === ValidationKeys.REQUIRED)
+        args = [];
       accumulator[key]= {
         args: args,
         message: message

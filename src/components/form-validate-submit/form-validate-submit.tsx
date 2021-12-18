@@ -99,7 +99,6 @@ export class FormValidateSubmit {
   async componentWillLoad(){
     if (this.formDefinition)
       await this.updateFormCache(this.formDefinition);
-    this.formEl = this.element.querySelector(`form[id="${this.formId}"]`);
   }
 
   /**
@@ -108,6 +107,7 @@ export class FormValidateSubmit {
    * After component has loaded, updates the form definition if required and bind the button event
    */
   async componentDidLoad(){
+    this.formEl = this.element.querySelector(`form[id="${this.formId}"]`);
     const inputs = this.getInputs();
     if (!this.formCache)
       this.formCache = await getFormDefinitionFromFields(inputs);
@@ -139,16 +139,6 @@ export class FormValidateSubmit {
     }
 
     this.form = JSON.parse(JSON.stringify(this.formCache));
-  }
-
-  @Listen('changeEvent')
-  async handleInputEvents(e){
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    const input: UIInputElement = e.target;
-    const value = await input.getValue();
-    this.formCache.fields[input.inputName].props.value = value;
-    console.log(`Value for field ${input.inputName} was updated to ${value}`);
   }
 
   private getInputs(): UIInputElement[] {

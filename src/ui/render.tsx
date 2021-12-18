@@ -1,8 +1,9 @@
-import {getRenderStrategy, setRenderStrategy, UIModel} from "@tvenceslau/ui-decorators/lib";
+import {setRenderStrategy, UIModel} from "@tvenceslau/ui-decorators/lib";
 import {UIElementDefinition, UIPropertyDecoratorDefinition} from "./types";
 import {formatDate, getPropertyDecorators, ValidationKeys} from "@tvenceslau/decorator-validation/lib";
 import {HTML5DateFormat, UIKeys, ValidatableByAttribute} from "./constants";
 import {h} from "@stencil/core";
+import {detect} from "detect-browser";
 
 type ValidationsByKey = {
   [indexer: string]: {
@@ -20,9 +21,14 @@ const formatByType = function(type, value){
 }
 
 /**
+ * HTML5 Render Strategy
  *
  * @param {T} model the model to render in HTML5
  * @param {string} [mode]
+ *
+ * @function render
+ *
+ * @memberOf ui-decorators-web.ui
  */
 export function render<T extends UIModel>(model: T, mode?: string){
   const validationProperties: UIPropertyDecoratorDefinition[] = [];
@@ -95,3 +101,22 @@ export function render<T extends UIModel>(model: T, mode?: string){
 }
 
 setRenderStrategy(render);
+
+export type BrowserErrorWriter = (errors: string[]) => string;
+
+const chromeErrorWriter = (errors: string[]) => errors.join('\n');
+
+const firefoxErrorWriter = (errors: string[]) => errors.join(' | ');
+
+export function getBrowserErrorMessage(errors: string[]){
+  const browser = detect();
+  switch (browser && browser.name) {
+    case 'firefox':
+      return firefoxErrorWriter(errors);
+    default:
+      return chromeErrorWriter(errors);
+  }
+}
+
+
+
