@@ -18,9 +18,9 @@ import { TextFieldTypes } from '@ionic/core';
  *                         type={"text"}
  *                         placeholder={"place text here"}
  *                         label={"This is a label"}
- *                         required={"true"}
- *                         maxlength={"15"}
- *                         minlength={"5"}
+ *                         required={true}
+ *                         maxlength={15}
+ *                         minlength={5}
  *                         pattern={"^\w+$"}
  * ></ionic-ui-input-element>
  */
