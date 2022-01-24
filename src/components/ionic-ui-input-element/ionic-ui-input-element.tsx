@@ -3,6 +3,7 @@ import {FormDefinition, UIInputElement} from "../../ui/types";
 import {bindNativeInput, checkValidity, reportValidity, setCustomValidity, prefixName} from "../../utils";
 import {UIKeys} from "../../ui";
 import {IonInput} from "@ionic/core/components/ion-input";
+import { TextFieldTypes } from '@ionic/core';
 
 /**
  * Wrapper around basic HTML5 elements just to demonstrate integration with other frameworks
@@ -52,7 +53,7 @@ export class IonicUiInputElement implements UIInputElement{
   /**
    * The field type
    */
-  @Prop({attribute: "type", mutable: false}) type: string;
+  @Prop({attribute: "type", mutable: false}) type: TextFieldTypes;
   /**
    * value holding attribute
    */
@@ -73,27 +74,27 @@ export class IonicUiInputElement implements UIInputElement{
   /**
    * Sets the field as required when set to true
    */
-  @Prop() required: boolean | "true" | "false" = false;
+  @Prop() required: boolean = false;
   /**
    * defines the minimum accepted length
    */
-  @Prop({attribute: "minlength"}) minlength?: number | string;
+  @Prop({attribute: "minlength"}) minlength?: number;
   /**
    * defines the minimum accepted value (inclusive)
    */
-  @Prop({attribute: "min"}) min?: number | string;
+  @Prop({attribute: "min"}) min?: string;
   /**
    * defines the maximum accepted value (inclusive)
    */
-  @Prop({attribute: "max"}) max?: number | string;
+  @Prop({attribute: "max"}) max?: string;
   /**
    * defined the accepted value step
    */
-  @Prop({attribute: "step"}) step?: number | string;
+  @Prop({attribute: "step"}) step?: string;
   /**
    * defines the maximum accepted length
    */
-  @Prop({attribute: "maxlength"}) maxlength?: number | string;
+  @Prop({attribute: "maxlength"}) maxlength?: number;
   /**
    * defines the accepted REGEXP pattern
    */
@@ -200,12 +201,12 @@ export class IonicUiInputElement implements UIInputElement{
   render() {
     return (
       <Host id={prefixName(this.inputId)}>
-        <ion-item>
-          <ion-label position={this.labelPosition} lines={this.lines}>{this.label}</ion-label>
+        <ion-item lines={this.lines}>
+          <ion-label position={this.labelPosition}>{this.label}</ion-label>
           <ion-input name={prefixName(this.inputName, this.inputPrefix)}
                      type={this.type}
                      placeholder={this.placeholder}
-
+                     // @ts-ignore
                      subtype={this.subtype}
 
                      required={this.required}

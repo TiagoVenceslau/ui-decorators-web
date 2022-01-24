@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { FormDefinition, FormResult } from "./ui/types";
+import { TextFieldTypes } from "@ionic/core";
 export namespace Components {
     interface BasicUiInputElement {
         /**
@@ -193,19 +194,19 @@ export namespace Components {
         /**
           * defines the maximum accepted value (inclusive)
          */
-        "max"?: number | string;
+        "max"?: string;
         /**
           * defines the maximum accepted length
          */
-        "maxlength"?: number | string;
+        "maxlength"?: number;
         /**
           * defines the minimum accepted value (inclusive)
          */
-        "min"?: number | string;
+        "min"?: string;
         /**
           * defines the minimum accepted length
          */
-        "minlength"?: number | string;
+        "minlength"?: number;
         /**
           * defines the accepted REGEXP pattern
          */
@@ -223,7 +224,7 @@ export namespace Components {
         /**
           * Sets the field as required when set to true
          */
-        "required": boolean | "true" | "false";
+        "required": boolean;
         /**
           * Resets the field value
          */
@@ -237,7 +238,7 @@ export namespace Components {
         /**
           * defined the accepted value step
          */
-        "step"?: number | string;
+        "step"?: string;
         /**
           * Subtype attribute. used for custom validation
          */
@@ -245,7 +246,7 @@ export namespace Components {
         /**
           * The field type
          */
-        "type": string;
+        "type": TextFieldTypes;
         /**
           * value holding attribute
          */
@@ -420,19 +421,19 @@ declare namespace LocalJSX {
         /**
           * defines the maximum accepted value (inclusive)
          */
-        "max"?: number | string;
+        "max"?: string;
         /**
           * defines the maximum accepted length
          */
-        "maxlength"?: number | string;
+        "maxlength"?: number;
         /**
           * defines the minimum accepted value (inclusive)
          */
-        "min"?: number | string;
+        "min"?: string;
         /**
           * defines the minimum accepted length
          */
-        "minlength"?: number | string;
+        "minlength"?: number;
         /**
           * defines the accepted REGEXP pattern
          */
@@ -444,11 +445,11 @@ declare namespace LocalJSX {
         /**
           * Sets the field as required when set to true
          */
-        "required"?: boolean | "true" | "false";
+        "required"?: boolean;
         /**
           * defined the accepted value step
          */
-        "step"?: number | string;
+        "step"?: string;
         /**
           * Subtype attribute. used for custom validation
          */
@@ -456,7 +457,7 @@ declare namespace LocalJSX {
         /**
           * The field type
          */
-        "type"?: string;
+        "type"?: TextFieldTypes;
         /**
           * value holding attribute
          */
